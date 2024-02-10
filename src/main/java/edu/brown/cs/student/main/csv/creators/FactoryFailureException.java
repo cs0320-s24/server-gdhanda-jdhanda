@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main;
+package edu.brown.cs.student.main.csv.creators;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import java.util.List;
  * Feel free to expand or supplement or use it for other purposes.
  */
 public class FactoryFailureException extends Exception {
-  final List<String> row;
+  public final List<String> row;
 
   /**
    * The constructor passes the message up to super() and stores the row locally.

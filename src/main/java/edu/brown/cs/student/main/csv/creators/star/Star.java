@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main;
+package edu.brown.cs.student.main.csv.creators.star;
 
 /**
  * A very basic class used in conjunction with StarCreator (which implements CreatorFromRow) to test

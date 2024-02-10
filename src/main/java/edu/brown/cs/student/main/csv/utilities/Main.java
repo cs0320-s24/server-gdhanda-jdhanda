@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main;
+package edu.brown.cs.student.main.csv.utilities;
 
 /** The Main class of our project. This is where execution begins. */
 public final class Main {
