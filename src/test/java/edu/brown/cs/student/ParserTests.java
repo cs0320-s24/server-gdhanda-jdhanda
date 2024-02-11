@@ -1,11 +1,11 @@
 package edu.brown.cs.student;
 
-import edu.brown.cs.student.main.csv.utilities.CSVParser;
 import edu.brown.cs.student.main.csv.creators.FactoryFailureException;
 import edu.brown.cs.student.main.csv.creators.IntegerArrayCreator;
 import edu.brown.cs.student.main.csv.creators.SearcherCreator;
 import edu.brown.cs.student.main.csv.creators.star.Star;
 import edu.brown.cs.student.main.csv.creators.star.StarCreator;
+import edu.brown.cs.student.main.csv.utilities.CSVParser;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
