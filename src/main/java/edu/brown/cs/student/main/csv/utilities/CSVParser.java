@@ -2,7 +2,6 @@ package edu.brown.cs.student.main.csv.utilities;
 
 import edu.brown.cs.student.main.csv.creators.CreatorFromRow;
 import edu.brown.cs.student.main.csv.creators.FactoryFailureException;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;

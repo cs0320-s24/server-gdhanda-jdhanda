@@ -2,7 +2,6 @@ package edu.brown.cs.student.main.csv.utilities;
 
 import edu.brown.cs.student.main.csv.creators.FactoryFailureException;
 import edu.brown.cs.student.main.csv.creators.SearcherCreator;
-
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;

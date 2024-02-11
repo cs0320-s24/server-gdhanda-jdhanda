@@ -1,7 +1,6 @@
 package edu.brown.cs.student.main.csv.utilities;
 
 import edu.brown.cs.student.main.csv.creators.FactoryFailureException;
-
 import java.io.IOException;
 import java.util.ArrayList;
 
