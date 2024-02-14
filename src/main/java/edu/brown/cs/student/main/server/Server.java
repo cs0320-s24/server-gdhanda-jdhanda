@@ -2,17 +2,29 @@ package edu.brown.cs.student.main.server;
 
 import static spark.Spark.after;
 
-import edu.brown.cs.student.main.server.handlers.LoadCSVHandler;
-import edu.brown.cs.student.main.server.handlers.SearchCSVHandler;
-import edu.brown.cs.student.main.server.handlers.ViewCSVHandler;
 import edu.brown.cs.student.main.server.handlers.census.BroadbandHandler;
+import edu.brown.cs.student.main.server.handlers.csvhandlers.CSVDatasource;
+import edu.brown.cs.student.main.server.handlers.csvhandlers.LoadCSVHandler;
+import edu.brown.cs.student.main.server.handlers.csvhandlers.SearchCSVHandler;
+import edu.brown.cs.student.main.server.handlers.csvhandlers.ViewCSVHandler;
 import spark.Spark;
 
 // TODO: FIX Access Control
 
 public class Server {
 
+  private CSVDatasource csvState;
+
+  private Server(CSVDatasource csvState) {
+    this.csvState = csvState;
+    this.run();
+  }
+
   public static void main(String[] args) {
+    new Server(new CSVDatasource());
+  }
+
+  private void run() {
     int port = 3232;
     Spark.port(port);
     /*
@@ -40,9 +52,9 @@ public class Server {
         });
 
     // Setting up the handler for the GET /____csv and /broadband endpoints
-    Spark.get("loadcsv", new LoadCSVHandler());
-    Spark.get("searchcsv", new SearchCSVHandler());
-    Spark.get("viewcsv", new ViewCSVHandler());
+    Spark.get("loadcsv", new LoadCSVHandler(this.csvState));
+    Spark.get("searchcsv", new SearchCSVHandler(this.csvState));
+    Spark.get("viewcsv", new ViewCSVHandler(this.csvState));
     Spark.get("broadband", new BroadbandHandler());
     Spark.init();
     Spark.awaitInitialization();
