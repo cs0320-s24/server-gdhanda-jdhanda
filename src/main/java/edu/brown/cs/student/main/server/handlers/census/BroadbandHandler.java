@@ -24,10 +24,12 @@ import spark.Route;
 public class BroadbandHandler implements Route {
   private Map<String, String> stateCodes;
   private boolean haveStateCodes;
+  private GenericCache<String, CensusData> censusCache;
 
   public BroadbandHandler() {
     this.haveStateCodes = false;
     this.stateCodes = new HashMap<>();
+    this.censusCache = new GenericCache<>(true, 100, true, 60);
   }
 
   @Override
@@ -39,7 +41,11 @@ public class BroadbandHandler implements Route {
 
     Map<String, Object> responseData = new HashMap<>();
     try {
-      CensusData censusData = this.censusRequest(state, county);
+      CensusData censusData;
+      if ((censusData = this.censusCache.get((state + county))) == null) {
+        censusData = this.censusRequest(state, county);
+        this.censusCache.put((state + county), censusData);
+      }
 
       responseData.put("result", "success");
       responseData.put("time", getTime());
