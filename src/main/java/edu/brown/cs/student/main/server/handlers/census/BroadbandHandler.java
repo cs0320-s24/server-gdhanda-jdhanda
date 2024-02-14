@@ -35,21 +35,18 @@ public class BroadbandHandler implements Route {
     String county = request.queryParams("county");
 
     Map<String, Object> responseData = new HashMap<>();
-
     try {
       CensusData censusData = this.censusRequest(state, county);
 
-      String dateAndTime = getTime();
-
       responseData.put("result", "success");
-      responseData.put("date and time", dateAndTime);
-      responseData.put("census data", censusData);
+      responseData.put("time", getTime());
+      responseData.put("broadband", censusData);
 
     } catch (Exception e) {
       e.printStackTrace();
-      responseData.put("result", e.getMessage());
+      responseData.put("result", "error");
+      responseData.put("caused by", e.getMessage());
     }
-
     return responseData;
   }
 
@@ -58,24 +55,13 @@ public class BroadbandHandler implements Route {
           CountyNotFoundException, DatasourceException {
 
     List<String> codes = this.getCodes(state, county);
-
-    URL requestURL =
-        new URL(
-            "https",
-            "api.census.gov",
-            "/data/2021/acs/acs1/subject/variables?get=NAME,S2802_C03_022E&for=county:"
+    List<List<String>> results =
+        this.queryCensus(
+            "/data/2021/acs/acs1/subject/"
+                + "variables?get=NAME,S2802_C03_022E&for=county:"
                 + codes.get(1)
                 + "&in=state:"
                 + codes.get(0));
-    HttpURLConnection clientConnection = connect(requestURL);
-    Moshi moshi = new Moshi.Builder().build();
-
-    Type listListString = Types.newParameterizedType(List.class, List.class, String.class);
-    JsonAdapter<List<List<String>>> adapter = moshi.adapter(listListString);
-
-    List<List<String>> results =
-        adapter.fromJson(new Buffer().readFrom(clientConnection.getInputStream()));
-    clientConnection.disconnect();
 
     return new CensusData(state, county, results.get(1).get(1));
   }
@@ -93,20 +79,8 @@ public class BroadbandHandler implements Route {
     }
     String stateCode = this.stateCodes.get(state);
 
-    URL requestURL =
-        new URL(
-            "https",
-            "api.census.gov",
-            "/data/2010/dec/sf1?get=NAME&for=county:*&in=state:" + stateCode);
-    HttpURLConnection clientConnection = connect(requestURL);
-    Moshi moshi = new Moshi.Builder().build();
-
-    Type listListString = Types.newParameterizedType(List.class, List.class, String.class);
-    JsonAdapter<List<List<String>>> adapter = moshi.adapter(listListString);
-
     List<List<String>> counties =
-        adapter.fromJson(new Buffer().readFrom(clientConnection.getInputStream()));
-    clientConnection.disconnect();
+        this.queryCensus("/data/2010/dec/sf1?get=NAME&for=county:*&in=state:" + stateCode);
 
     String countyCode = "";
     String countyState = county + ", " + state;
@@ -124,8 +98,23 @@ public class BroadbandHandler implements Route {
 
   private void fetchAllStateCodes()
       throws URISyntaxException, IOException, InterruptedException, DatasourceException {
-    URL requestURL = new URL("https", "api.census.gov", "/data/2010/dec/sf1?get=NAME&for=state:*");
-    HttpURLConnection clientConnection = connect(requestURL);
+    List<List<String>> results = this.queryCensus("/data/2010/dec/sf1?get=NAME&for=state:*");
+
+    for (List<String> list : results) {
+      this.stateCodes.put(list.get(0), list.get(1));
+    }
+    this.stateCodes.remove("NAME");
+  }
+
+  private String getTime() {
+    LocalDateTime dateAndTime = LocalDateTime.now();
+    DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    return dateAndTime.format(format);
+  }
+
+  private List<List<String>> queryCensus(String file) throws IOException, DatasourceException {
+    URL requestURL = new URL("https", "api.census.gov", file);
+    HttpURLConnection clientConnection = this.connect(requestURL);
     Moshi moshi = new Moshi.Builder().build();
 
     Type listListString = Types.newParameterizedType(List.class, List.class, String.class);
@@ -135,23 +124,7 @@ public class BroadbandHandler implements Route {
         adapter.fromJson(new Buffer().readFrom(clientConnection.getInputStream()));
     clientConnection.disconnect();
 
-    for (List<String> list : results) {
-      this.stateCodes.put(list.get(0), list.get(1));
-    }
-    this.stateCodes.remove("NAME");
-  }
-
-  private String getTime() {
-    // Get the current date and time
-    LocalDateTime currentDateTime = LocalDateTime.now();
-
-    // Define the date and time format
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-    // Format the current date and time using the defined format
-    String formattedDateTime = currentDateTime.format(formatter);
-
-    return formattedDateTime;
+    return results;
   }
 
   /**
