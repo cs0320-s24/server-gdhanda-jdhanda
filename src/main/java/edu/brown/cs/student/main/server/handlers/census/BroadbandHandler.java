@@ -3,6 +3,9 @@ package edu.brown.cs.student.main.server.handlers.census;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
+import edu.brown.cs.student.main.server.handlers.census.exceptions.CountyNotFoundException;
+import edu.brown.cs.student.main.server.handlers.census.exceptions.DatasourceException;
+import edu.brown.cs.student.main.server.handlers.census.exceptions.StateNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.*;
@@ -51,14 +54,13 @@ public class BroadbandHandler implements Route {
   }
 
   private CensusData censusRequest(String state, String county)
-      throws URISyntaxException, IOException, InterruptedException, StateNotFoundException,
-          CountyNotFoundException, DatasourceException {
+      throws IOException, StateNotFoundException, CountyNotFoundException, DatasourceException {
 
     List<String> codes = this.getCodes(state, county);
     List<List<String>> results =
         this.queryCensus(
-            "/data/2021/acs/acs1/subject/"
-                + "variables?get=NAME,S2802_C03_022E&for=county:"
+            "/data/2021/acs/acs1/subject/variables?"
+                + "get=NAME,S2802_C03_022E&for=county:"
                 + codes.get(1)
                 + "&in=state:"
                 + codes.get(0));
@@ -67,8 +69,7 @@ public class BroadbandHandler implements Route {
   }
 
   private List<String> getCodes(String state, String county)
-      throws URISyntaxException, IOException, InterruptedException, StateNotFoundException,
-          CountyNotFoundException, DatasourceException {
+      throws IOException, StateNotFoundException, CountyNotFoundException, DatasourceException {
     if (!this.haveStateCodes) {
       this.fetchAllStateCodes();
       this.haveStateCodes = true;
@@ -96,8 +97,7 @@ public class BroadbandHandler implements Route {
     return List.of(stateCode, countyCode);
   }
 
-  private void fetchAllStateCodes()
-      throws URISyntaxException, IOException, InterruptedException, DatasourceException {
+  private void fetchAllStateCodes() throws IOException, DatasourceException {
     List<List<String>> results = this.queryCensus("/data/2010/dec/sf1?get=NAME&for=state:*");
 
     for (List<String> list : results) {
