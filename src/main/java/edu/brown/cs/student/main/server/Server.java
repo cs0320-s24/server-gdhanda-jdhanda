@@ -2,11 +2,13 @@ package edu.brown.cs.student.main.server;
 
 import static spark.Spark.after;
 
-import edu.brown.cs.student.main.server.handlers.BroadbandHandler;
 import edu.brown.cs.student.main.server.handlers.LoadCSVHandler;
 import edu.brown.cs.student.main.server.handlers.SearchCSVHandler;
 import edu.brown.cs.student.main.server.handlers.ViewCSVHandler;
+import edu.brown.cs.student.main.server.handlers.census.BroadbandHandler;
 import spark.Spark;
+
+// TODO: FIX Access Control
 
 public class Server {
 
@@ -14,6 +16,7 @@ public class Server {
     int port = 3232;
     Spark.port(port);
     /*
+
        Setting CORS headers to allow cross-origin requests from the client; this is necessary for the client to
        be able to make requests to the server.
 
