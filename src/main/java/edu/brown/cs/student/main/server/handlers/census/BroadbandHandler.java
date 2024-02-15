@@ -33,6 +33,8 @@ public class BroadbandHandler implements Route {
     String state = request.queryParams("state");
     String county = request.queryParams("county");
 
+    // TODO: Ensure correct parameters.
+
     // Initialize the response format.
     Map<String, Object> responseData = new HashMap<>();
     try {
@@ -43,6 +45,7 @@ public class BroadbandHandler implements Route {
         this.censusCache.put((state + county), censusData);
       }
 
+      // TODO: Update this to be correct.
       // Add relevant fields to the result.
       responseData.put("result", "success");
       responseData.put("time", getTime());

@@ -38,7 +38,7 @@ public class CSVDatasource {
   public void searchCSV(String value, String header, boolean byIndex, boolean byValue)
       throws CSVNotFoundException {
     if (!fileLoaded) {
-      throw new CSVNotFoundException("There is no CSV file loaded! Try <loadcsv>!");
+      throw new CSVNotFoundException("There is no CSV file loaded! Try \'loadcsv\'!");
     }
 
     if (byIndex) {
@@ -54,7 +54,7 @@ public class CSVDatasource {
     }
   }
 
-  public ArrayList<ArrayList<String>> getData() throws CSVNotFoundException {
+  public ArrayList<ArrayList<String>> viewCSV() throws CSVNotFoundException {
     if (!fileLoaded) {
       throw new CSVNotFoundException("There is no CSV file loaded! Try <loadcsv>!");
     }

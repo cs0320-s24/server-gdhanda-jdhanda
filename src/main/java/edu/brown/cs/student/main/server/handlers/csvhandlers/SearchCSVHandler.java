@@ -8,12 +8,18 @@ import spark.Route;
 
 public class SearchCSVHandler implements Route {
 
+  private CSVDatasource sharedCSVData;
+
   public SearchCSVHandler(CSVDatasource state) {}
 
   @Override
   public Object handle(Request request, Response response) {
     // Store the state and county of the request.
-    String path = request.queryParams("filepath");
+    String value = request.queryParams("value");
+    String index = request.queryParams("index");
+    String header = request.queryParams("header");
+
+    // TODO: Ensure correct parameters.
 
     // Initialize the response format.
     Map<String, Object> responseData = new HashMap<>();
@@ -21,7 +27,7 @@ public class SearchCSVHandler implements Route {
 
       // Add relevant fields to the result.
       responseData.put("result", "success");
-      responseData.put("filepath", path);
+      responseData.put("value", value);
 
       responseData.put("csv-data", "test-search");
 

@@ -1,5 +1,6 @@
 package edu.brown.cs.student.main.server.handlers.csvhandlers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import spark.Request;
@@ -18,17 +19,27 @@ public class ViewCSVHandler implements Route {
   public Object handle(Request request, Response response) {
     // Initialize the response format.
     Map<String, Object> responseData = new HashMap<>();
+
+    if (request.queryParams().size() > 0) {
+      // Bad request! Send an error response.
+      responseData.put("result", "error");
+      responseData.put("caused-by", "too many parameters!");
+      responseData.put("input", request.queryParams());
+      return responseData;
+    }
+
     try {
+      ArrayList<ArrayList<String>> data = this.sharedCSVData.viewCSV();
 
       // Add relevant fields to the result.
       responseData.put("result", "success");
-      responseData.put("csv-data", "test-view");
+      responseData.put("csv-data", data);
 
     } catch (Exception e) {
       // Add descriptive error message to the result.
       e.printStackTrace();
       responseData.put("result", "error");
-      responseData.put("caused by", e.getMessage());
+      responseData.put("caused-by", e.getMessage());
     }
     return responseData;
   }

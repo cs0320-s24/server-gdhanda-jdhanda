@@ -8,7 +8,11 @@ import spark.Route;
 
 public class LoadCSVHandler implements Route {
 
-  public LoadCSVHandler(CSVDatasource state) {}
+  private CSVDatasource sharedCSVData;
+
+  public LoadCSVHandler(CSVDatasource state) {
+    this.sharedCSVData = state;
+  }
 
   @Override
   public Object handle(Request request, Response response) {
@@ -16,9 +20,14 @@ public class LoadCSVHandler implements Route {
     String path = request.queryParams("filepath");
     String header = request.queryParams("header");
 
+    // TODO: Ensure correct parameters.
+
     // Initialize the response format.
     Map<String, Object> responseData = new HashMap<>();
     try {
+      boolean headerBool = (header.equals("true")) ? true : false;
+
+      this.sharedCSVData.loadCSV(path, headerBool);
 
       // Add relevant fields to the result.
       responseData.put("result", "success");
