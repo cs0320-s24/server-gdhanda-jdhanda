@@ -23,7 +23,7 @@ public class BroadbandHandler implements Route {
   public BroadbandHandler() {
     this.haveStateCodes = false;
     this.stateCodes = new HashMap<>();
-    this.censusCache = new GenericCache<>(true, 100, true, 60);
+    this.censusCache = new GenericCache<>(true, 25, true, 10);
   }
 
   @Override
