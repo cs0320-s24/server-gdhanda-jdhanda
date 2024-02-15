@@ -23,8 +23,8 @@ public class ViewCSVHandler implements Route {
     if (request.queryParams().size() > 0) {
       // Bad request! Send an error response.
       responseData.put("result", "error");
-      responseData.put("caused-by", "too many parameters!");
-      responseData.put("input", request.queryParams());
+      responseData.put("error_type", "too many parameters!");
+      responseData.put("params_given", request.queryParams());
       return responseData;
     }
 
@@ -37,9 +37,8 @@ public class ViewCSVHandler implements Route {
 
     } catch (Exception e) {
       // Add descriptive error message to the result.
-      e.printStackTrace();
       responseData.put("result", "error");
-      responseData.put("caused-by", e.getMessage());
+      responseData.put("error_type", e.getMessage());
     }
     return responseData;
   }

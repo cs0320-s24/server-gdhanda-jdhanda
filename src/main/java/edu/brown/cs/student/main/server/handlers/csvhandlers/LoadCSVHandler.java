@@ -16,30 +16,56 @@ public class LoadCSVHandler implements Route {
 
   @Override
   public Object handle(Request request, Response response) {
+    // Initialize the response format.
+    Map<String, Object> responseData = new HashMap<>();
+
     // Store the filepath and header of the request.
     String path = request.queryParams("filepath");
     String header = request.queryParams("header");
 
-    // TODO: Ensure correct parameters.
+    // Check that two parameters were specified.
+    if (request.queryParams().size() != 2) {
+      // Bad request! Send an error response.
+      responseData.put("result", "error");
+      responseData.put("error_type", "invalid number of parameters specified!");
+      responseData.put("params_given", request.queryParams());
+      responseData.put("params_required", "filepath, header");
+      return responseData;
+    }
 
-    // Initialize the response format.
-    Map<String, Object> responseData = new HashMap<>();
+    // Add inputs to the response data.
+    responseData.put("query_filepath", path);
+    responseData.put("query_header", header);
+
+    // Check that both path and header were given.
+    if (path == null || header == null) {
+      // Bad request! Send an error response.
+      responseData.put("result", "error");
+      responseData.put("error_type", "missing_parameter");
+      responseData.put("error_arg", (path == null) ? "path" : "header");
+      return responseData;
+    }
+
+    // Check that header has a valid value.
+    if (!(header.equals("true") || header.equals("false"))) {
+      responseData.put("result", "error");
+      responseData.put("error_type", "invalid header value");
+      responseData.put("valid_inputs", "header=true, header=false");
+      return responseData;
+    }
+
     try {
+      // Load the CSV data.
       boolean headerBool = (header.equals("true")) ? true : false;
-
       this.sharedCSVData.loadCSV(path, headerBool);
 
-      // Add relevant fields to the result.
+      // Inform the user of successful load.
       responseData.put("result", "success");
-      responseData.put("filepath", path);
-      responseData.put("header", header);
-      responseData.put("csv-data", "test-load");
 
     } catch (Exception e) {
       // Add descriptive error message to the result.
-      e.printStackTrace();
       responseData.put("result", "error");
-      responseData.put("caused by", e.getMessage());
+      responseData.put("error_type", e.getMessage());
     }
     return responseData;
   }
