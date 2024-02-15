@@ -12,8 +12,9 @@ public class LoadCSVHandler implements Route {
 
   @Override
   public Object handle(Request request, Response response) {
-    // Store the state and county of the request.
+    // Store the filepath and header of the request.
     String path = request.queryParams("filepath");
+    String header = request.queryParams("header");
 
     // Initialize the response format.
     Map<String, Object> responseData = new HashMap<>();
@@ -22,7 +23,7 @@ public class LoadCSVHandler implements Route {
       // Add relevant fields to the result.
       responseData.put("result", "success");
       responseData.put("filepath", path);
-
+      responseData.put("header", header);
       responseData.put("csv-data", "test-load");
 
     } catch (Exception e) {

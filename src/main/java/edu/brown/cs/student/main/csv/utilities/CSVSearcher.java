@@ -102,4 +102,13 @@ public class CSVSearcher {
       }
     } else System.out.println("Could not find '" + value.trim() + "' in the dataset!");
   }
+
+  /**
+   * A getter method for the parsed csv data.
+   *
+   * @return the data parsed with the parser given in the constructor.
+   */
+  public ArrayList<ArrayList<String>> getData() {
+    return this.data;
+  }
 }

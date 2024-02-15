@@ -8,21 +8,20 @@ import spark.Route;
 
 public class ViewCSVHandler implements Route {
 
-  public ViewCSVHandler(CSVDatasource state) {}
+  private CSVDatasource sharedCSVData;
+
+  public ViewCSVHandler(CSVDatasource state) {
+    this.sharedCSVData = state;
+  }
 
   @Override
   public Object handle(Request request, Response response) {
-    // Store the state and county of the request.
-    String path = request.queryParams("filepath");
-
     // Initialize the response format.
     Map<String, Object> responseData = new HashMap<>();
     try {
 
       // Add relevant fields to the result.
       responseData.put("result", "success");
-      responseData.put("filepath", path);
-
       responseData.put("csv-data", "test-view");
 
     } catch (Exception e) {
