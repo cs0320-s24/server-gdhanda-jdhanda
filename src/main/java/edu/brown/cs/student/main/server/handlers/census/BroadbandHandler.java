@@ -9,13 +9,33 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
+/**
+ * BroadbandHandler is called by the broadband endpoint in server,
+ * and works to retrieve the specified data from the Census API, and
+ * then send the formatted response back.
+ */
 public class BroadbandHandler implements Route {
+
+  // Instance of the interface type to handle the Census API
   private BroadbandDatasource datasource;
 
+  /**
+   * Constructor for BroadbandHandler.
+   *
+   * @param datasource is the Census Datasource to retrieve data from.
+   */
   public BroadbandHandler(BroadbandDatasource datasource) {
     this.datasource = datasource;
   }
 
+  /**
+   * The handle method is prescribed by the Route interface. Uses the request parameters
+   * to search for the appropriate data in the data source.
+   *
+   * @param request contains the parameters of the API request.
+   * @param response is an unused parameter representing the response to the query.
+   * @return a hash map from strings to object values.
+   */
   @Override
   public Object handle(Request request, Response response) {
     // Initialize the response format.
@@ -65,6 +85,11 @@ public class BroadbandHandler implements Route {
     return responseData;
   }
 
+  /**
+   * Simple method used to get the current local time.
+   *
+   * @return the time in "yyyy-MM-dd HH:mm:ss" format.
+   */
   private String getTime() {
     LocalDateTime dateAndTime = LocalDateTime.now();
     DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");

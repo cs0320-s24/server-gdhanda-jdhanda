@@ -8,15 +8,35 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This class implements BroadbandDatasource for use in the
+ * BroadbandHandler, and accesses the Census API directly to
+ * retrieve broadband data for the specified state and county.
+ */
 public class CensusAPISource implements BroadbandDatasource {
-  private Map<String, String> stateCodes;
-  private boolean haveStateCodes;
+  private Map<String, String> stateCodes; // Will store a map of state to state code.
+  private boolean haveStateCodes; // Will track if the state codes have been retrieved yet.
 
+  /**
+   * Constructor for the CensusAPISource. Initialize instance variables.
+   */
   public CensusAPISource() {
     this.stateCodes = new HashMap<>();
     this.haveStateCodes = false;
   }
 
+  /**
+   * Override the getBroadbandData method from the BroadbandDatasource interface.
+   * Retrieves the data directly from the Census API and formats it as CensusData.
+   *
+   * @param state is the state to be searched.
+   * @param county is the county within the state to be searched.
+   * @return a CensusData object of the data from the Census API.
+   * @throws IOException
+   * @throws StateNotFoundException
+   * @throws CountyNotFoundException
+   * @throws DatasourceException
+   */
   @Override
   public CensusData getBroadbandData(String state, String county)
       throws IOException, StateNotFoundException, CountyNotFoundException, DatasourceException {
@@ -36,6 +56,18 @@ public class CensusAPISource implements BroadbandDatasource {
     return new CensusData(data.get(0), data.get(1) + "%", data.get(2), data.get(3));
   }
 
+  /**
+   * Helper method to retrieve the state and country codes to be queried by in the
+   * Census API.
+   *
+   * @param state to find the state code of.
+   * @param county to find the county code of.
+   * @return a list of the state and county codes.
+   * @throws IOException
+   * @throws StateNotFoundException
+   * @throws CountyNotFoundException
+   * @throws DatasourceException
+   */
   private List<String> getCodes(String state, String county)
       throws IOException, StateNotFoundException, CountyNotFoundException, DatasourceException {
 
@@ -73,6 +105,13 @@ public class CensusAPISource implements BroadbandDatasource {
     return List.of(stateCode, countyCode);
   }
 
+  /**
+   * Private method called with the first census query. Gets the state codes for
+   * all U.S. States and stores them in a HashMap from String (name) to int (code).
+   *
+   * @throws IOException
+   * @throws DatasourceException
+   */
   private void fetchAllStateCodes() throws IOException, DatasourceException {
     // Query the census for the state codes.
     List<List<String>> results =

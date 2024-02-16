@@ -12,7 +12,22 @@ import java.net.URLConnection;
 import java.util.List;
 import okio.Buffer;
 
+/**
+ * A class with static methods to assist the CensusAPISource in querying the census. Uses
+ * moshi to deserialize output.
+ */
 public class CensusAPIUtilities {
+
+  /**
+   * A utility method used within CensusAPISource to query the Census, given the
+   * url endpoint and specific query. Uses moshi to deserialize the census output
+   * into a List of a List of Strings.
+   *
+   * @param file the specific census query to be run.
+   * @return a List of a List of Strings, containing the de-serialized data from the census.
+   * @throws IOException
+   * @throws DatasourceException
+   */
   public static List<List<String>> queryCensus(String file)
       throws IOException, DatasourceException {
     URL requestURL = new URL("https", "api.census.gov", file);
@@ -30,8 +45,13 @@ public class CensusAPIUtilities {
   }
 
   /**
-   * Private helper method; throws IOException so different callers can handle differently if
-   * needed.
+   * Private helper method to connect to client; throws IOException and DatasourceExceptions
+   * so different callers can handle differently if needed.
+   *
+   * @param requestURL the URL used to query the census.
+   * @return the established HttpURLConnection for querying the census.
+   * @throws DatasourceException
+   * @throws IOException
    */
   private static HttpURLConnection connect(URL requestURL) throws DatasourceException, IOException {
     URLConnection urlConnection = requestURL.openConnection();
