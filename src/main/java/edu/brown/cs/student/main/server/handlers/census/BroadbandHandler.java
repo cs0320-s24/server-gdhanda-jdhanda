@@ -1,6 +1,5 @@
 package edu.brown.cs.student.main.server.handlers.census;
 
-import edu.brown.cs.student.main.server.serializers.CensusDataSerializer;
 import edu.brown.cs.student.main.server.serializers.MapSerializer;
 import java.util.HashMap;
 import java.util.List;
@@ -71,7 +70,7 @@ public class BroadbandHandler implements Route {
 
       // Add relevant fields to the result.
       responseData.put("result", "success");
-      responseData.put("data", new CensusDataSerializer().serialize(censusData));
+      responseData.put("data", censusData.toString());
 
     } catch (Exception e) {
       // Add descriptive error message to the result.

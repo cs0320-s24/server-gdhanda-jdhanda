@@ -99,8 +99,7 @@ public class MockCensusTests {
 
     // Mocked data: correct because we mocked.
     assertEquals(
-        censusDataAdapter.toJson(
-            new CensusData("Denver County, Colorado", "81", "01", "12", "TIME")),
+        new CensusData("Denver County, Colorado", "81", "01", "12", "TIME").toString(),
         responseBody.get("data"));
 
     loadConnection.disconnect();
