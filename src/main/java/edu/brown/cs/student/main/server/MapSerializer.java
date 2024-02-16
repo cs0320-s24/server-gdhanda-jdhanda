@@ -7,14 +7,14 @@ import java.lang.reflect.Type;
 import java.util.Map;
 
 /** A class used to serialize user outputs in each handler class. */
-public class HashMapSerializer {
+public class MapSerializer {
   private final JsonAdapter<Map<String, Object>> adapter;
 
   /**
    * The constructor creates an adapter to convert from a map of strings to objects to a JSON
    * string.
    */
-  public HashMapSerializer() {
+  public MapSerializer() {
     Moshi moshi = new Moshi.Builder().build();
     Type mapStringObject = Types.newParameterizedType(Map.class, String.class, Object.class);
     this.adapter = moshi.adapter(mapStringObject);

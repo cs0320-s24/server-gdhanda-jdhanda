@@ -1,5 +1,6 @@
 package edu.brown.cs.student.main.server.handlers.csvhandlers;
 
+import edu.brown.cs.student.main.server.MapSerializer;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +47,7 @@ public class LoadCSVHandler implements Route {
       responseData.put("error_type", "invalid number of parameters specified!");
       responseData.put("params_given", request.queryParams());
       responseData.put("params_required", List.of("filepath", "header"));
-      return responseData;
+      return new MapSerializer().serialize(responseData);
     }
 
     // Add inputs to the response data.
@@ -58,7 +59,7 @@ public class LoadCSVHandler implements Route {
       responseData.put("result", "error");
       responseData.put("error_type", "missing_parameter");
       responseData.put("error_arg", (path == null) ? "path" : "header");
-      return responseData;
+      return new MapSerializer().serialize(responseData);
     }
 
     // Check that header has a valid value.
@@ -66,7 +67,7 @@ public class LoadCSVHandler implements Route {
       responseData.put("result", "error");
       responseData.put("error_type", "invalid header value");
       responseData.put("valid_inputs", List.of("true", "false"));
-      return responseData;
+      return new MapSerializer().serialize(responseData);
     }
 
     try {
@@ -84,6 +85,6 @@ public class LoadCSVHandler implements Route {
       responseData.put("exception", parts[parts.length - 1]);
       responseData.put("error_type", e.getMessage());
     }
-    return responseData;
+    return new MapSerializer().serialize(responseData);
   }
 }

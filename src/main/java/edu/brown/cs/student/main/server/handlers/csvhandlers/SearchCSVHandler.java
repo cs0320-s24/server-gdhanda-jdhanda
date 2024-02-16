@@ -1,5 +1,6 @@
 package edu.brown.cs.student.main.server.handlers.csvhandlers;
 
+import edu.brown.cs.student.main.server.MapSerializer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -60,7 +61,7 @@ public class SearchCSVHandler implements Route {
       responseData.put("result", "error");
       responseData.put("error_type", "missing_parameter");
       responseData.put("error_arg", "value");
-      return responseData;
+      return new MapSerializer().serialize(responseData);
     }
 
     // Search entire data by default.
@@ -96,7 +97,7 @@ public class SearchCSVHandler implements Route {
       responseData.put("exception", parts[parts.length - 1]);
       responseData.put("error_type", e.getMessage());
     }
-    return responseData;
+    return new MapSerializer().serialize(responseData);
   }
 
   /**
@@ -107,12 +108,12 @@ public class SearchCSVHandler implements Route {
    * @param responseData is the map of response data.
    * @return the updated responseData map.
    */
-  private Map<String, Object> invalidParams(Set<String> params, Map<String, Object> responseData) {
+  private String invalidParams(Set<String> params, Map<String, Object> responseData) {
     responseData.put("result", "error");
     responseData.put("error_type", "invalid parameters specified!");
     responseData.put("params_given", params);
     responseData.put("params_required", "value");
     responseData.put("optional_params", List.of("index", "header"));
-    return responseData;
+    return new MapSerializer().serialize(responseData);
   }
 }

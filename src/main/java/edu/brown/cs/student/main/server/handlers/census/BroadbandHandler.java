@@ -1,5 +1,6 @@
 package edu.brown.cs.student.main.server.handlers.census;
 
+import edu.brown.cs.student.main.server.MapSerializer;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -50,7 +51,7 @@ public class BroadbandHandler implements Route {
       responseData.put("error_type", "invalid number of parameters specified!");
       responseData.put("params_given", request.queryParams());
       responseData.put("params_required", List.of("state", "county"));
-      return responseData;
+      return new MapSerializer().serialize(responseData);
     }
 
     // Add inputs to the response data.
@@ -62,7 +63,7 @@ public class BroadbandHandler implements Route {
       responseData.put("result", "error");
       responseData.put("error_type", "missing_parameter");
       responseData.put("error_arg", (state == null) ? "state" : "county");
-      return responseData;
+      return new MapSerializer().serialize(responseData);
     }
 
     try {
@@ -81,7 +82,7 @@ public class BroadbandHandler implements Route {
       responseData.put("exception", parts[parts.length - 1]);
       responseData.put("error_type", e.getMessage());
     }
-    return responseData;
+    return new MapSerializer().serialize(responseData);
   }
 
   /**

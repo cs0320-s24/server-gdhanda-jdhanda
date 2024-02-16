@@ -1,5 +1,6 @@
 package edu.brown.cs.student.main.server.handlers.csvhandlers;
 
+import edu.brown.cs.student.main.server.MapSerializer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,7 +42,7 @@ public class ViewCSVHandler implements Route {
       responseData.put("result", "error");
       responseData.put("error_type", "too many parameters!");
       responseData.put("params_given", request.queryParams());
-      return responseData;
+      return new MapSerializer().serialize(responseData);
     }
 
     try {
@@ -58,6 +59,6 @@ public class ViewCSVHandler implements Route {
       responseData.put("exception", parts[parts.length - 1]);
       responseData.put("error_type", e.getMessage());
     }
-    return responseData;
+    return new MapSerializer().serialize(responseData);
   }
 }
