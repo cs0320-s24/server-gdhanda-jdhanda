@@ -14,7 +14,28 @@
 
 # Design Choices
 ### Class and Interface Relationships
-The program stems out of the Server class.
+##### Interfaces Implemented
+- CSVDatasource is implemented by CSVSharedSource.
+  - This is here mostly for extendability.
+
+- BroadbandDatasource is implemented by CensusAPISource and CachingCensusSource
+  - This helps to allow the option of using a cache or not
+  - The Caching census source wraps a CensusAPI Source in order to add a cache. 
+
+##### Class Structure
+- The program stems out of the Server class.
+  - Server creates instances of the four handler classes, as well as instances of 
+  the CSVDatasource and BroadbandDatasource interfaces which are passed into the
+  respective handlers.
+    - BroadbandHandler uses its CachingCensusSource, which wraps a CensusAPI, and uses
+    the CensusAPIUtilities class to retrieve data and turn it into CensusData objects.
+      - The data is serialized with MapSerializer.
+    - LoadCSVHandler uses the CSVSharedSource, which has a CSVSearcher which uses parse
+    to load the CSV file.
+    - ViewCSV accesses that same associated instance of CSVSharedSource to get the loaded
+    csv data and return it to the user.
+    - SearchCSV accesses the same CSVSharedSource and uses the CSVSearcher to perform
+    the correct search operation.
 
 ### Niche Classes and Data Structures
 ##### CensusData Record
@@ -48,7 +69,7 @@ No known errors or bugs.
 - Tests Loading on...
   - A valid input.
   - An empty input.
-  - An file that doesn't exist.
+  - A file that doesn't exist.
   - An input with too many args.
   - An inaccessible filepath.
   - Bad header input.
