@@ -1,6 +1,7 @@
 package edu.brown.cs.student.main.csv.utilities;
 
-import edu.brown.cs.student.main.csv.creators.FactoryFailureException;
+import edu.brown.cs.student.main.csv.exceptions.FactoryFailureException;
+import edu.brown.cs.student.main.csv.exceptions.InvalidIndexException;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -48,7 +49,7 @@ public class CSVSearcher {
    *
    * @param value The String value to find in the CSV data.
    */
-  public boolean searchAllData(String value) {
+  public ArrayList<ArrayList<String>> searchAllData(String value) {
     ArrayList<ArrayList<String>> results = new ArrayList<>();
     for (int i = (this.hasHeader) ? 1 : 0; i < data.size(); i++) {
       for (int j = 0; j < data.get(0).size(); j++) {
@@ -58,8 +59,7 @@ public class CSVSearcher {
         }
       }
     }
-    this.printResults(results, value);
-    return (results.size() > 0) ? true : false;
+    return results;
   }
 
   /**
@@ -70,10 +70,11 @@ public class CSVSearcher {
    * @param index The column index in which to search for the value.
    * @return False if the index is invalid, true otherwise.
    */
-  public boolean searchColByIndex(String value, int index) {
+  public ArrayList<ArrayList<String>> searchColByIndex(String value, int index)
+      throws InvalidIndexException {
     // Check valid index.
     if (index < 0 || index >= data.get(0).size()) {
-      return false;
+      throw new InvalidIndexException("Index \"" + index + "\" is not valid!");
     }
     // Search through data.
     ArrayList<ArrayList<String>> results = new ArrayList<>();
@@ -82,25 +83,7 @@ public class CSVSearcher {
         results.add(data.get(i));
       }
     }
-    // Print results and return.
-    this.printResults(results, value);
-    return true;
-  }
-
-  /**
-   * A helper method to print out the results of a search. The method is public for testing
-   * purposes.
-   *
-   * @param results The list of rows where the value was found.
-   * @param value The String value found in the CSV data.
-   */
-  public void printResults(ArrayList<ArrayList<String>> results, String value) {
-    if (results.size() > 0) {
-      System.out.println("Here's where '" + value.trim() + "' was found:");
-      for (ArrayList<String> row : results) {
-        System.out.println(row);
-      }
-    } else System.out.println("Could not find '" + value.trim() + "' in the dataset!");
+    return results;
   }
 
   /**

@@ -33,7 +33,7 @@ public class BroadbandHandler implements Route {
     String state = request.queryParams("state");
     String county = request.queryParams("county");
 
-    // TODO: Ensure correct parameters.
+    // TODO: check valid inputs
 
     // Initialize the response format.
     Map<String, Object> responseData = new HashMap<>();
@@ -53,9 +53,10 @@ public class BroadbandHandler implements Route {
 
     } catch (Exception e) {
       // Add descriptive error message to the result.
-      e.printStackTrace();
       responseData.put("result", "error");
-      responseData.put("caused by", e.getMessage());
+      String[] parts = e.getClass().toString().split("\\.");
+      responseData.put("exception", parts[parts.length - 1]);
+      responseData.put("error_type", e.getMessage());
     }
     return responseData;
   }
@@ -88,7 +89,7 @@ public class BroadbandHandler implements Route {
 
     // Get State code from stateCodes instance variable.
     if (!this.stateCodes.containsKey(state)) {
-      throw new StateNotFoundException("Could not find state: " + state);
+      throw new StateNotFoundException(state);
     }
     String stateCode = this.stateCodes.get(state);
 
@@ -107,7 +108,7 @@ public class BroadbandHandler implements Route {
 
     // Make sure county was found.
     if (!(countyCode.length() > 0)) {
-      throw new CountyNotFoundException("Could not find county: " + county);
+      throw new CountyNotFoundException(county);
     }
 
     // Return a list of the county and state codes.

@@ -1,5 +1,6 @@
 package edu.brown.cs.student.main.csv.creators;
 
+import edu.brown.cs.student.main.csv.exceptions.FactoryFailureException;
 import java.util.ArrayList;
 import java.util.List;
 

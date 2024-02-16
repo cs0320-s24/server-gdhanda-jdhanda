@@ -8,7 +8,6 @@ import spark.Response;
 import spark.Route;
 
 public class ViewCSVHandler implements Route {
-
   private CSVDatasource sharedCSVData;
 
   public ViewCSVHandler(CSVDatasource state) {
@@ -21,7 +20,6 @@ public class ViewCSVHandler implements Route {
     Map<String, Object> responseData = new HashMap<>();
 
     if (request.queryParams().size() > 0) {
-      // Bad request! Send an error response.
       responseData.put("result", "error");
       responseData.put("error_type", "too many parameters!");
       responseData.put("params_given", request.queryParams());
@@ -38,6 +36,8 @@ public class ViewCSVHandler implements Route {
     } catch (Exception e) {
       // Add descriptive error message to the result.
       responseData.put("result", "error");
+      String[] parts = e.getClass().toString().split("\\.");
+      responseData.put("exception", parts[parts.length - 1]);
       responseData.put("error_type", e.getMessage());
     }
     return responseData;

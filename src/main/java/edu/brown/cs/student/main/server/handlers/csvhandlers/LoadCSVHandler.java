@@ -1,13 +1,13 @@
 package edu.brown.cs.student.main.server.handlers.csvhandlers;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 
 public class LoadCSVHandler implements Route {
-
   private CSVDatasource sharedCSVData;
 
   public LoadCSVHandler(CSVDatasource state) {
@@ -25,11 +25,10 @@ public class LoadCSVHandler implements Route {
 
     // Check that two parameters were specified.
     if (request.queryParams().size() != 2) {
-      // Bad request! Send an error response.
       responseData.put("result", "error");
       responseData.put("error_type", "invalid number of parameters specified!");
       responseData.put("params_given", request.queryParams());
-      responseData.put("params_required", "filepath, header");
+      responseData.put("params_required", List.of("filepath", "header"));
       return responseData;
     }
 
@@ -39,7 +38,6 @@ public class LoadCSVHandler implements Route {
 
     // Check that both path and header were given.
     if (path == null || header == null) {
-      // Bad request! Send an error response.
       responseData.put("result", "error");
       responseData.put("error_type", "missing_parameter");
       responseData.put("error_arg", (path == null) ? "path" : "header");
@@ -50,7 +48,7 @@ public class LoadCSVHandler implements Route {
     if (!(header.equals("true") || header.equals("false"))) {
       responseData.put("result", "error");
       responseData.put("error_type", "invalid header value");
-      responseData.put("valid_inputs", "header=true, header=false");
+      responseData.put("valid_inputs", List.of("true", "false"));
       return responseData;
     }
 
@@ -65,6 +63,8 @@ public class LoadCSVHandler implements Route {
     } catch (Exception e) {
       // Add descriptive error message to the result.
       responseData.put("result", "error");
+      String[] parts = e.getClass().toString().split("\\.");
+      responseData.put("exception", parts[parts.length - 1]);
       responseData.put("error_type", e.getMessage());
     }
     return responseData;
