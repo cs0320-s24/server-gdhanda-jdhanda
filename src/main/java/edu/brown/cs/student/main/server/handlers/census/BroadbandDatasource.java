@@ -7,6 +7,6 @@ import java.io.IOException;
 
 public interface BroadbandDatasource {
 
-  public CensusData getBroadbandData(String state, String county)
+  CensusData getBroadbandData(String state, String county)
       throws IOException, StateNotFoundException, CountyNotFoundException, DatasourceException;
 }
