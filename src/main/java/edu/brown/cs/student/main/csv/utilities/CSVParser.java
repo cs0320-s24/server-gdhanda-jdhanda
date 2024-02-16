@@ -64,6 +64,9 @@ public class CSVParser<T> {
   private List<String> trimRow(String[] row) {
     for (int i = 0; i < row.length; i++) {
       row[i] = row[i].trim();
+      if (row[i].startsWith("\"") && row[i].endsWith("\"")) {
+        row[i] = row[i].substring(1, row[i].length() - 1);
+      }
     }
     return List.of(row);
   }
