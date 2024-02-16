@@ -1,8 +1,6 @@
 package edu.brown.cs.student.main.server.handlers.census.exceptions;
 
-/**
- * Simple exception to be thrown when the state is not in the Census API. Extends Exception.
- */
+/** Simple exception to be thrown when the state is not in the Census API. Extends Exception. */
 public class StateNotFoundException extends Exception {
 
   /**

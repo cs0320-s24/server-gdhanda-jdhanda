@@ -7,13 +7,30 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
+/**
+ * LoadCSVHandler handles the loadcsv endpoint in the Server, attempting to load the CSV file from
+ * the given path via the CSVDataSource.
+ */
 public class LoadCSVHandler implements Route {
-  private CSVDatasource sharedCSVData;
+  private CSVDatasource sharedCSVData; // The shared CSVDatasource.
 
+  /**
+   * Constructor initializes the datasource for the CSV.
+   *
+   * @param state is the polymorphic implementation of CSVDatasource.
+   */
   public LoadCSVHandler(CSVDatasource state) {
     this.sharedCSVData = state;
   }
 
+  /**
+   * Override the handle method specified in Route. Attempts to load the CSV file, returning a
+   * descriptive error message for bad inputs or failures, if not successful.
+   *
+   * @param request contains the parameters of the load request.
+   * @param response is left unused.
+   * @return a hash map of response data about the result of the load attempt.
+   */
   @Override
   public Object handle(Request request, Response response) {
     // Initialize the response format.

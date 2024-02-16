@@ -5,9 +5,8 @@ import com.google.common.cache.CacheBuilder;
 import java.util.concurrent.TimeUnit;
 
 /**
- * A very generic cache implementation which can be specified in terms of a
- * maximum time for an item in the cache, and a maximum number of elements
- * to be held in the cache at one time.
+ * A very generic cache implementation which can be specified in terms of a maximum time for an item
+ * in the cache, and a maximum number of elements to be held in the cache at one time.
  *
  * @param <K> is the type of the key for the cache object.
  * @param <V> is the type of the value in the cache object.
@@ -16,8 +15,8 @@ public class GenericCache<K, V> {
   private Cache<K, V> cache; // An instance of a Guava cache.
 
   /**
-   * The constructor initializes the cache with the specified parameters for max
-   * size and or max time in the cache.
+   * The constructor initializes the cache with the specified parameters for max size and or max
+   * time in the cache.
    *
    * @param sizeCap is a boolean for if the size is capped.
    * @param size is the size cap.
@@ -52,6 +51,7 @@ public class GenericCache<K, V> {
 
   /**
    * Retrieves the value associated with the given key.
+   *
    * @param key is the key to look for.
    * @return the value if present, null if not.
    */

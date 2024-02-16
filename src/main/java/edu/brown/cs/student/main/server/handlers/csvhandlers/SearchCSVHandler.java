@@ -9,13 +9,31 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
+/**
+ * SearchCSVHandler handles the searchcsv endpoint in the Server, attempting to search the CSV file
+ * for the given parameters using the shared CSVDatasource.
+ */
 public class SearchCSVHandler implements Route {
-  private CSVDatasource sharedCSVData;
+  private CSVDatasource sharedCSVData; // The shared CSVDatasource.
 
+  /**
+   * Constructor initializes the datasource for the CSV.
+   *
+   * @param state is the polymorphic implementation of CSVDatasource.
+   */
   public SearchCSVHandler(CSVDatasource state) {
     this.sharedCSVData = state;
   }
 
+  /**
+   * Override the handle method specified in Route. Attempts to search the CSV file, returning a
+   * descriptive error message for bad inputs or failures, and a hash map containing a
+   * two-dimensional array of the results if successful.
+   *
+   * @param request contains the parameters of the search request.
+   * @param response is left unused.
+   * @return a hash map of response data with the result of the search attempt.
+   */
   @Override
   public Object handle(Request request, Response response) {
     // Initialize the response format.
@@ -81,6 +99,14 @@ public class SearchCSVHandler implements Route {
     return responseData;
   }
 
+  /**
+   * Private helper-method used to build a descriptive return map if the parameters given were
+   * invalid.
+   *
+   * @param params is the parameters
+   * @param responseData is the map of response data.
+   * @return the updated responseData map.
+   */
   private Map<String, Object> invalidParams(Set<String> params, Map<String, Object> responseData) {
     responseData.put("result", "error");
     responseData.put("error_type", "invalid parameters specified!");

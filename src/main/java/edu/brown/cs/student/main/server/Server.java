@@ -14,7 +14,8 @@ import edu.brown.cs.student.main.server.handlers.csvhandlers.ViewCSVHandler;
 import spark.Spark;
 
 /**
- * The main Server class, it starts the server, handles the endpoints, and sets access to the server.
+ * The main Server class, it starts the server, handles the endpoints, and sets access to the
+ * server.
  */
 public class Server {
 
@@ -22,7 +23,8 @@ public class Server {
   private BroadbandDatasource broadbandSource; // Will handle the Census API data.
 
   /**
-   * Initializes instance variables for the csv source and broadband source and calls the run method.
+   * Initializes instance variables for the csv source and broadband source and calls the run
+   * method.
    *
    * @param csvSource will handle the csv data.
    * @param broadbandSource will handle the Census API data.

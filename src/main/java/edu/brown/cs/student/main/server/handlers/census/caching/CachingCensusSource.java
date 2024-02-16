@@ -13,7 +13,8 @@ import java.io.IOException;
  */
 public class CachingCensusSource implements BroadbandDatasource {
   private final BroadbandDatasource original; // The original census datasource.
-  private final GenericCache<String, CensusData> censusCache; // A generic cache to store CensusData.
+  private final GenericCache<String, CensusData>
+      censusCache; // A generic cache to store CensusData.
 
   /**
    * Constructor initializes the instance variables.
@@ -28,9 +29,9 @@ public class CachingCensusSource implements BroadbandDatasource {
   }
 
   /**
-   * Override of the getBroadbandData method from the BroadbandDatasource interface. This implementation
-   * first checks if the data is in the cache before defaulting to the original datasource's implementation
-   * of this method if it is not.
+   * Override of the getBroadbandData method from the BroadbandDatasource interface. This
+   * implementation first checks if the data is in the cache before defaulting to the original
+   * datasource's implementation of this method if it is not.
    *
    * @param state is the state to be searched.
    * @param county is the county within the state to be searched.
@@ -45,7 +46,8 @@ public class CachingCensusSource implements BroadbandDatasource {
       throws IOException, StateNotFoundException, CountyNotFoundException, DatasourceException {
 
     CensusData censusData;
-    if ((censusData = this.censusCache.get((state + county))) == null) { // Tries to get data from cache.
+    if ((censusData = this.censusCache.get((state + county)))
+        == null) { // Tries to get data from cache.
       censusData = this.original.getBroadbandData(state, county); // Queries the Census API.
       this.censusCache.put((state + county), censusData);
     }

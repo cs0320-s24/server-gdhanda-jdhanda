@@ -1,8 +1,6 @@
 package edu.brown.cs.student.main.server.handlers.census.exceptions;
 
-/**
- * Simple exception to be thrown when there is an error with the datasource. Extends Exception.
- */
+/** Simple exception to be thrown when there is an error with the datasource. Extends Exception. */
 public class DatasourceException extends Exception {
 
   /**
