@@ -13,7 +13,7 @@ import spark.Route;
  * the shared CSVDatasource.
  */
 public class ViewCSVHandler implements Route {
-  private CSVDatasource sharedCSVData; // The shared CSVDatasource
+  private final CSVDatasource sharedCSVData; // The shared CSVDatasource
 
   /**
    * Constructor initializes the datasource for the CSV.

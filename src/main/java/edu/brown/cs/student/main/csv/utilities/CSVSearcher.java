@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * formatted as an Array of Strings.
  */
 public class CSVSearcher {
-  private ArrayList<ArrayList<String>> data;
+  private final ArrayList<ArrayList<String>> data;
   private boolean hasHeader;
 
   /**

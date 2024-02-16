@@ -15,7 +15,7 @@ import spark.Route;
  * for the given parameters using the shared CSVDatasource.
  */
 public class SearchCSVHandler implements Route {
-  private CSVDatasource sharedCSVData; // The shared CSVDatasource.
+  private final CSVDatasource sharedCSVData; // The shared CSVDatasource.
 
   /**
    * Constructor initializes the datasource for the CSV.

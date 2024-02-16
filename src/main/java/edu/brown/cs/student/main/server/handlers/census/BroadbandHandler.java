@@ -17,7 +17,7 @@ import spark.Route;
 public class BroadbandHandler implements Route {
 
   // Instance of the interface type to handle the Census API
-  private BroadbandDatasource datasource;
+  private final BroadbandDatasource datasource;
 
   /**
    * Constructor for BroadbandHandler.

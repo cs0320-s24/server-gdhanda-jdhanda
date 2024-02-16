@@ -13,8 +13,8 @@ import java.util.regex.Pattern;
 public class CSVParser<T> {
   static final Pattern regexSplitCSVRow =
       Pattern.compile(",(?=([^\\\"]*\\\"[^\\\"]*\\\")*(?![^\\\"]*\\\"))");
-  private BufferedReader bufferedReader;
-  private CreatorFromRow<T> creatorFromRow;
+  private final BufferedReader bufferedReader;
+  private final CreatorFromRow<T> creatorFromRow;
 
   /**
    * The constructor for CSVParser stores the BufferedReader and CreatorFromRow, for use when

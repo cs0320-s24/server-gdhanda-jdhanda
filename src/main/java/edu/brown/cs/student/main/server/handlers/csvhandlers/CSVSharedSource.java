@@ -104,6 +104,6 @@ public class CSVSharedSource implements CSVDatasource {
     if (!fileLoaded) {
       throw new CSVNotFoundException();
     }
-    return this.searcher.getData();
+    return new ArrayList<>(this.searcher.getData());
   }
 }

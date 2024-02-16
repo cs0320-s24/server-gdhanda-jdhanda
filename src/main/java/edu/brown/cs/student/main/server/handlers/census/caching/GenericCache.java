@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
  * @param <V> is the type of the value in the cache object.
  */
 public class GenericCache<K, V> {
-  private Cache<K, V> cache; // An instance of a Guava cache.
+  private final Cache<K, V> cache; // An instance of a Guava cache.
 
   /**
    * The constructor initializes the cache with the specified parameters for max size and or max
