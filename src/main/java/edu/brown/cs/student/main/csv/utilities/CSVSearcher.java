@@ -44,10 +44,11 @@ public class CSVSearcher {
   }
 
   /**
-   * A method used in the REPL. Searches the data and prints all rows that contain at least one
+   * A method used in the REPL. Searches the data and returns all rows that contain at least one
    * instance of the specified value.
    *
    * @param value The String value to find in the CSV data.
+   * @return An ArrayList of ArrayLists of Strings with the rows found.
    */
   public ArrayList<ArrayList<String>> searchAllData(String value) {
     ArrayList<ArrayList<String>> results = new ArrayList<>();
@@ -63,12 +64,12 @@ public class CSVSearcher {
   }
 
   /**
-   * A method used in the REPL. Searches the data and prints all rows that contain the specified
+   * A method used in the REPL. Searches the data and returns all rows that contain the specified
    * value in the specified column.
    *
    * @param value The String value to find in the CSV data.
    * @param index The column index in which to search for the value.
-   * @return False if the index is invalid, true otherwise.
+   * @return An ArrayList of ArrayLists of Strings with the rows found.
    */
   public ArrayList<ArrayList<String>> searchColByIndex(String value, int index)
       throws InvalidIndexException {
