@@ -10,9 +10,8 @@ import spark.Response;
 import spark.Route;
 
 /**
- * BroadbandHandler is called by the broadband endpoint in server,
- * and works to retrieve the specified data from the Census API, and
- * then send the formatted response back.
+ * BroadbandHandler is called by the broadband endpoint in server, and works to retrieve the
+ * specified data from the Census API, and then send the formatted response back.
  */
 public class BroadbandHandler implements Route {
 
@@ -29,8 +28,8 @@ public class BroadbandHandler implements Route {
   }
 
   /**
-   * The handle method is prescribed by the Route interface. Uses the request parameters
-   * to search for the appropriate data in the data source.
+   * The handle method is prescribed by the Route interface. Uses the request parameters to search
+   * for the appropriate data in the data source.
    *
    * @param request contains the parameters of the API request.
    * @param response is an unused parameter representing the response to the query.

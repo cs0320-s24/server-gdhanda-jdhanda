@@ -87,11 +87,12 @@ public class CSVSearcher {
   }
 
   /**
-   * A getter method for the parsed csv data.
+   * A getter method for the parsed csv data. Creates a defensive copy of the data to avoid
+   * tampering.
    *
    * @return the data parsed with the parser given in the constructor.
    */
   public ArrayList<ArrayList<String>> getData() {
-    return this.data;
+    return new ArrayList<>(this.data);
   }
 }

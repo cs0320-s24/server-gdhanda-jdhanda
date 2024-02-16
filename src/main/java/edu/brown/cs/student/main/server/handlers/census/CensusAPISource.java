@@ -9,25 +9,22 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * This class implements BroadbandDatasource for use in the
- * BroadbandHandler, and accesses the Census API directly to
- * retrieve broadband data for the specified state and county.
+ * This class implements BroadbandDatasource for use in the BroadbandHandler, and accesses the
+ * Census API directly to retrieve broadband data for the specified state and county.
  */
 public class CensusAPISource implements BroadbandDatasource {
   private Map<String, String> stateCodes; // Will store a map of state to state code.
   private boolean haveStateCodes; // Will track if the state codes have been retrieved yet.
 
-  /**
-   * Constructor for the CensusAPISource. Initialize instance variables.
-   */
+  /** Constructor for the CensusAPISource. Initialize instance variables. */
   public CensusAPISource() {
     this.stateCodes = new HashMap<>();
     this.haveStateCodes = false;
   }
 
   /**
-   * Override the getBroadbandData method from the BroadbandDatasource interface.
-   * Retrieves the data directly from the Census API and formats it as CensusData.
+   * Override the getBroadbandData method from the BroadbandDatasource interface. Retrieves the data
+   * directly from the Census API and formats it as CensusData.
    *
    * @param state is the state to be searched.
    * @param county is the county within the state to be searched.
@@ -57,8 +54,7 @@ public class CensusAPISource implements BroadbandDatasource {
   }
 
   /**
-   * Helper method to retrieve the state and country codes to be queried by in the
-   * Census API.
+   * Helper method to retrieve the state and country codes to be queried by in the Census API.
    *
    * @param state to find the state code of.
    * @param county to find the county code of.
@@ -106,8 +102,8 @@ public class CensusAPISource implements BroadbandDatasource {
   }
 
   /**
-   * Private method called with the first census query. Gets the state codes for
-   * all U.S. States and stores them in a HashMap from String (name) to int (code).
+   * Private method called with the first census query. Gets the state codes for all U.S. States and
+   * stores them in a HashMap from String (name) to int (code).
    *
    * @throws IOException
    * @throws DatasourceException

@@ -13,15 +13,14 @@ import java.util.List;
 import okio.Buffer;
 
 /**
- * A class with static methods to assist the CensusAPISource in querying the census. Uses
- * moshi to deserialize output.
+ * A class with static methods to assist the CensusAPISource in querying the census. Uses moshi to
+ * deserialize output.
  */
 public class CensusAPIUtilities {
 
   /**
-   * A utility method used within CensusAPISource to query the Census, given the
-   * url endpoint and specific query. Uses moshi to deserialize the census output
-   * into a List of a List of Strings.
+   * A utility method used within CensusAPISource to query the Census, given the url endpoint and
+   * specific query. Uses moshi to deserialize the census output into a List of a List of Strings.
    *
    * @param file the specific census query to be run.
    * @return a List of a List of Strings, containing the de-serialized data from the census.
@@ -45,8 +44,8 @@ public class CensusAPIUtilities {
   }
 
   /**
-   * Private helper method to connect to client; throws IOException and DatasourceExceptions
-   * so different callers can handle differently if needed.
+   * Private helper method to connect to client; throws IOException and DatasourceExceptions so
+   * different callers can handle differently if needed.
    *
    * @param requestURL the URL used to query the census.
    * @return the established HttpURLConnection for querying the census.
