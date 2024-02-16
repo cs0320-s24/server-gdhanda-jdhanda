@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
-import edu.brown.cs.student.census.mocking.MockCensusSource;
 import edu.brown.cs.student.main.server.handlers.census.BroadbandHandler;
 import edu.brown.cs.student.main.server.handlers.census.CensusData;
 import java.io.IOException;
@@ -148,4 +147,3 @@ public class MockCensusTests {
     }
   }
 }
-

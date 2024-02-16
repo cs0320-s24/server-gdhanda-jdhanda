@@ -2,8 +2,6 @@ package edu.brown.cs.student.main.server.handlers.census;
 
 import edu.brown.cs.student.main.server.serializers.CensusDataSerializer;
 import edu.brown.cs.student.main.server.serializers.MapSerializer;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -73,7 +71,6 @@ public class BroadbandHandler implements Route {
 
       // Add relevant fields to the result.
       responseData.put("result", "success");
-      responseData.put("time", getTime());
       responseData.put("data", new CensusDataSerializer().serialize(censusData));
 
     } catch (Exception e) {
@@ -84,16 +81,5 @@ public class BroadbandHandler implements Route {
       responseData.put("error_message", e.getMessage());
     }
     return new MapSerializer().serialize(responseData);
-  }
-
-  /**
-   * Simple method used to get the current local time.
-   *
-   * @return the time in "yyyy-MM-dd HH:mm:ss" format.
-   */
-  private String getTime() {
-    LocalDateTime dateAndTime = LocalDateTime.now();
-    DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-    return dateAndTime.format(format);
   }
 }

@@ -4,6 +4,8 @@ import edu.brown.cs.student.main.server.handlers.census.exceptions.CountyNotFoun
 import edu.brown.cs.student.main.server.handlers.census.exceptions.DatasourceException;
 import edu.brown.cs.student.main.server.handlers.census.exceptions.StateNotFoundException;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,7 +52,7 @@ public class CensusAPISource implements BroadbandDatasource {
 
     // Construct a CensusData object with the results and return it.
     List<String> data = results.get(1);
-    return new CensusData(data.get(0), data.get(1) + "%", data.get(2), data.get(3));
+    return new CensusData(data.get(0), data.get(1) + "%", data.get(2), data.get(3), this.getTime());
   }
 
   /**
@@ -118,5 +120,16 @@ public class CensusAPISource implements BroadbandDatasource {
       this.stateCodes.put(list.get(0), list.get(1));
     }
     this.stateCodes.remove("NAME");
+  }
+
+  /**
+   * Simple method used to get the current local time.
+   *
+   * @return the time in "yyyy-MM-dd HH:mm:ss" format.
+   */
+  private String getTime() {
+    LocalDateTime dateAndTime = LocalDateTime.now();
+    DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    return dateAndTime.format(format);
   }
 }
