@@ -6,7 +6,7 @@ import edu.brown.cs.student.main.server.handlers.csvhandlers.exceptions.CSVNotFo
 import edu.brown.cs.student.main.server.handlers.csvhandlers.exceptions.HeaderNotFoundException;
 import edu.brown.cs.student.main.server.handlers.csvhandlers.exceptions.InvalidFilepathException;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 /** Interface to define the three actionable methods on a CSV datasource. */
 public interface CSVDatasource {
@@ -36,8 +36,7 @@ public interface CSVDatasource {
    * @throws InvalidIndexException
    * @throws HeaderNotFoundException
    */
-  ArrayList<ArrayList<String>> searchCSV(
-      String value, String header, boolean byIndex, boolean byValue)
+  List<List<String>> searchCSV(String value, String header, boolean byIndex, boolean byValue)
       throws CSVNotFoundException, InvalidIndexException, HeaderNotFoundException;
 
   /**
@@ -46,5 +45,5 @@ public interface CSVDatasource {
    * @return a two-dimensional list representing each row and its components.
    * @throws CSVNotFoundException
    */
-  ArrayList<ArrayList<String>> viewCSV() throws CSVNotFoundException;
+  List<List<String>> viewCSV() throws CSVNotFoundException;
 }

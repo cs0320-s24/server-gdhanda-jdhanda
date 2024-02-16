@@ -1,7 +1,6 @@
 package edu.brown.cs.student.main.server.handlers.csvhandlers;
 
-import edu.brown.cs.student.main.server.MapSerializer;
-import java.util.ArrayList;
+import edu.brown.cs.student.main.server.serializers.MapSerializer;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -83,19 +82,19 @@ public class SearchCSVHandler implements Route {
     }
 
     try {
-      ArrayList<ArrayList<String>> results =
+      List<List<String>> results =
           this.sharedCSVData.searchCSV(value, headerSearch, byIndex, byHeader);
 
       // Add relevant fields to the result.
       responseData.put("result", "success");
-      responseData.put("csv-data", results);
+      responseData.put("data", results);
 
     } catch (Exception e) {
       // Add descriptive error message to the result.
       responseData.put("result", "error");
       String[] parts = e.getClass().toString().split("\\.");
       responseData.put("exception", parts[parts.length - 1]);
-      responseData.put("error_type", e.getMessage());
+      responseData.put("error_message", e.getMessage());
     }
     return new MapSerializer().serialize(responseData);
   }

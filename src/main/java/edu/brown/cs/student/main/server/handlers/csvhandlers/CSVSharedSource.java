@@ -11,6 +11,7 @@ import edu.brown.cs.student.main.server.handlers.csvhandlers.exceptions.InvalidF
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * CSVSharedSource will load the CSV and provide implementations necessary for the CSV handlers to
@@ -67,8 +68,7 @@ public class CSVSharedSource implements CSVDatasource {
    * @throws HeaderNotFoundException
    */
   @Override
-  public ArrayList<ArrayList<String>> searchCSV(
-      String value, String header, boolean byIndex, boolean byValue)
+  public List<List<String>> searchCSV(String value, String header, boolean byIndex, boolean byValue)
       throws CSVNotFoundException, InvalidIndexException, HeaderNotFoundException {
 
     if (!fileLoaded) {
@@ -97,7 +97,7 @@ public class CSVSharedSource implements CSVDatasource {
    * @throws CSVNotFoundException
    */
   @Override
-  public ArrayList<ArrayList<String>> viewCSV() throws CSVNotFoundException {
+  public List<List<String>> viewCSV() throws CSVNotFoundException {
     if (!fileLoaded) {
       throw new CSVNotFoundException();
     }

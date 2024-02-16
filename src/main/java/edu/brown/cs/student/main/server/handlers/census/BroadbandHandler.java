@@ -1,6 +1,6 @@
 package edu.brown.cs.student.main.server.handlers.census;
 
-import edu.brown.cs.student.main.server.MapSerializer;
+import edu.brown.cs.student.main.server.serializers.MapSerializer;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;

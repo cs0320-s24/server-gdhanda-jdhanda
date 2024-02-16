@@ -1,6 +1,6 @@
 package edu.brown.cs.student.main.server.handlers.csvhandlers;
 
-import edu.brown.cs.student.main.server.MapSerializer;
+import edu.brown.cs.student.main.server.serializers.MapSerializer;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

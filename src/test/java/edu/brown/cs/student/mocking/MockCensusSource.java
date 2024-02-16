@@ -1,4 +1,7 @@
-package edu.brown.cs.student.main.server.handlers.census;
+package edu.brown.cs.student.mocking;
+
+import edu.brown.cs.student.main.server.handlers.census.BroadbandDatasource;
+import edu.brown.cs.student.main.server.handlers.census.CensusData;
 
 /**
  * A datasource that never actually calls the Census API, but always returns a constant census-data

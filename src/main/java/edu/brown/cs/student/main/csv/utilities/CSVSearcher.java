@@ -5,6 +5,7 @@ import edu.brown.cs.student.main.csv.exceptions.InvalidIndexException;
 import edu.brown.cs.student.main.server.handlers.csvhandlers.exceptions.HeaderNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A class that works with a CSVParser in order to parse and search a CSV File whose rows are
@@ -54,7 +55,7 @@ public class CSVSearcher {
    * @param value The String value to find in the CSV data.
    * @return An ArrayList of ArrayLists of Strings with the rows found.
    */
-  public ArrayList<ArrayList<String>> searchAllData(String value) {
+  public List<List<String>> searchAllData(String value) {
     ArrayList<ArrayList<String>> results = new ArrayList<>();
     for (int i = (this.hasHeader) ? 1 : 0; i < data.size(); i++) {
       for (int j = 0; j < data.get(0).size(); j++) {
@@ -64,7 +65,7 @@ public class CSVSearcher {
         }
       }
     }
-    return results;
+    return new ArrayList<>(results);
   }
 
   /**
@@ -75,8 +76,7 @@ public class CSVSearcher {
    * @param index The column index in which to search for the value.
    * @return An ArrayList of ArrayLists of Strings with the rows found.
    */
-  public ArrayList<ArrayList<String>> searchColByIndex(String value, int index)
-      throws InvalidIndexException {
+  public List<List<String>> searchColByIndex(String value, int index) throws InvalidIndexException {
     // Check valid index.
     if (index < 0 || index >= data.get(0).size()) {
       throw new InvalidIndexException("Index \"" + index + "\" is not valid!");
@@ -88,7 +88,7 @@ public class CSVSearcher {
         results.add(data.get(i));
       }
     }
-    return results;
+    return new ArrayList<>(results);
   }
 
   /**
@@ -97,7 +97,7 @@ public class CSVSearcher {
    *
    * @return the data parsed with the parser given in the constructor.
    */
-  public ArrayList<ArrayList<String>> getData() {
+  public List<List<String>> getData() {
     return new ArrayList<>(this.data);
   }
 }

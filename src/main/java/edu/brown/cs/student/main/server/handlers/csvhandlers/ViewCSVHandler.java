@@ -1,8 +1,8 @@
 package edu.brown.cs.student.main.server.handlers.csvhandlers;
 
-import edu.brown.cs.student.main.server.MapSerializer;
-import java.util.ArrayList;
+import edu.brown.cs.student.main.server.serializers.MapSerializer;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import spark.Request;
 import spark.Response;
@@ -46,11 +46,11 @@ public class ViewCSVHandler implements Route {
     }
 
     try {
-      ArrayList<ArrayList<String>> data = this.sharedCSVData.viewCSV();
+      List<List<String>> data = this.sharedCSVData.viewCSV();
 
       // Add relevant fields to the result.
       responseData.put("result", "success");
-      responseData.put("csv-data", data);
+      responseData.put("data", data);
 
     } catch (Exception e) {
       // Add descriptive error message to the result.
