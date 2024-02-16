@@ -13,7 +13,6 @@ import java.util.List;
 import okio.Buffer;
 
 public class CensusAPIUtilities {
-
   public static List<List<String>> queryCensus(String file)
       throws IOException, DatasourceException {
     URL requestURL = new URL("https", "api.census.gov", file);

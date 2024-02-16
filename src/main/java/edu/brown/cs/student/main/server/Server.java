@@ -3,6 +3,8 @@ package edu.brown.cs.student.main.server;
 import static spark.Spark.after;
 
 import edu.brown.cs.student.main.server.handlers.census.BroadbandHandler;
+import edu.brown.cs.student.main.server.handlers.census.CensusAPISource;
+import edu.brown.cs.student.main.server.handlers.census.caching.CachingCensusSource;
 import edu.brown.cs.student.main.server.handlers.csvhandlers.CSVDatasource;
 import edu.brown.cs.student.main.server.handlers.csvhandlers.LoadCSVHandler;
 import edu.brown.cs.student.main.server.handlers.csvhandlers.SearchCSVHandler;
@@ -55,7 +57,7 @@ public class Server {
     Spark.get("loadcsv", new LoadCSVHandler(this.csvState));
     Spark.get("searchcsv", new SearchCSVHandler(this.csvState));
     Spark.get("viewcsv", new ViewCSVHandler(this.csvState));
-    Spark.get("broadband", new BroadbandHandler());
+    Spark.get("broadband", new BroadbandHandler(new CachingCensusSource(new CensusAPISource())));
     Spark.init();
     Spark.awaitInitialization();
 

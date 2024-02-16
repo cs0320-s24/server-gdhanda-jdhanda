@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main.server.handlers.census;
+package edu.brown.cs.student.main.server.handlers.census.caching;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
@@ -9,17 +9,17 @@ public class GenericCache<K, V> {
 
   public GenericCache(boolean sizeCap, int size, boolean timeCap, int minutes) {
     if (sizeCap && timeCap) {
-      cache =
+      this.cache =
           CacheBuilder.newBuilder()
               .maximumSize(size)
               .expireAfterAccess(minutes, TimeUnit.MINUTES)
               .build();
     } else if (sizeCap) {
-      cache = CacheBuilder.newBuilder().maximumSize(size).build();
+      this.cache = CacheBuilder.newBuilder().maximumSize(size).build();
     } else if (timeCap) {
-      cache = CacheBuilder.newBuilder().expireAfterAccess(minutes, TimeUnit.MINUTES).build();
+      this.cache = CacheBuilder.newBuilder().expireAfterAccess(minutes, TimeUnit.MINUTES).build();
     } else {
-      cache = CacheBuilder.newBuilder().build();
+      this.cache = CacheBuilder.newBuilder().build();
     }
   }
 
