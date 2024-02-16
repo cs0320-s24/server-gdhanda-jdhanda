@@ -9,6 +9,10 @@ public class InvalidFilepathException extends Exception {
    * @param filepath is the filepath the program attempted to reach.
    */
   public InvalidFilepathException(String filepath) {
-    super("Filepath \"" + filepath + "\" is beyond the reach of this program!");
+    super(
+        "Filepath \""
+            + filepath
+            + "\" is beyond the reach of this program! "
+            + "Make sure your filepath begins with 'data/...'");
   }
 }

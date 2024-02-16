@@ -81,9 +81,6 @@ public class CSVSharedSource implements CSVDatasource {
       // If searching by header value:
       if (byValue) {
         index = this.searcher.getIndexFromHeader(header);
-        if (index < 0) {
-          throw new HeaderNotFoundException(header);
-        }
       } else index = Integer.parseInt(header.trim());
       // Search with the index found above:
       return this.searcher.searchColByIndex(value, index);

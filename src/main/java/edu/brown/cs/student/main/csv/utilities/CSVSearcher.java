@@ -2,6 +2,7 @@ package edu.brown.cs.student.main.csv.utilities;
 
 import edu.brown.cs.student.main.csv.exceptions.FactoryFailureException;
 import edu.brown.cs.student.main.csv.exceptions.InvalidIndexException;
+import edu.brown.cs.student.main.server.handlers.csvhandlers.exceptions.HeaderNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -34,13 +35,16 @@ public class CSVSearcher {
    * @param column The header value to find an index for.
    * @return The index of the header if it is found, -1 otherwise.
    */
-  public int getIndexFromHeader(String column) {
+  public int getIndexFromHeader(String column) throws HeaderNotFoundException {
+    if (!this.hasHeader) {
+      throw new HeaderNotFoundException();
+    }
     for (int i = 0; i < data.get(0).size(); i++) {
       if (data.get(0).get(i).equalsIgnoreCase(column)) {
         return i;
       }
     }
-    return -1;
+    throw new HeaderNotFoundException(column, new ArrayList<>(data.get(0)));
   }
 
   /**
