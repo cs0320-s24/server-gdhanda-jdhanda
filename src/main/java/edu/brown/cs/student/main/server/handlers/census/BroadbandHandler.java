@@ -28,15 +28,34 @@ public class BroadbandHandler implements Route {
 
   @Override
   public Object handle(Request request, Response response) {
+    // Initialize the response format.
+    Map<String, Object> responseData = new HashMap<>();
 
     // Store the state and county of the request.
     String state = request.queryParams("state");
     String county = request.queryParams("county");
 
-    // TODO: check valid inputs
+    // Check that two parameters were specified.
+    if (request.queryParams().size() != 2) {
+      responseData.put("result", "error");
+      responseData.put("error_type", "invalid number of parameters specified!");
+      responseData.put("params_given", request.queryParams());
+      responseData.put("params_required", List.of("state", "county"));
+      return responseData;
+    }
 
-    // Initialize the response format.
-    Map<String, Object> responseData = new HashMap<>();
+    // Add inputs to the response data.
+    responseData.put("query_state", state);
+    responseData.put("query_county", county);
+
+    // Check that both path and header were given.
+    if (state == null || county == null) {
+      responseData.put("result", "error");
+      responseData.put("error_type", "missing_parameter");
+      responseData.put("error_arg", (state == null) ? "state" : "county");
+      return responseData;
+    }
+
     try {
       // Check the cache for requested data, otherwise query the census.
       CensusData censusData;
@@ -45,11 +64,10 @@ public class BroadbandHandler implements Route {
         this.censusCache.put((state + county), censusData);
       }
 
-      // TODO: Update this to be correct.
       // Add relevant fields to the result.
       responseData.put("result", "success");
       responseData.put("time", getTime());
-      responseData.put("broadband", censusData);
+      responseData.put("data", censusData);
 
     } catch (Exception e) {
       // Add descriptive error message to the result.
@@ -75,7 +93,8 @@ public class BroadbandHandler implements Route {
                 + codes.get(0));
 
     // Construct a CensusData object with the results and return it.
-    return new CensusData(state, county, results.get(1).get(1));
+    List<String> data = results.get(1);
+    return new CensusData(data.get(0), data.get(1), data.get(2), data.get(3));
   }
 
   private List<String> getCodes(String state, String county)
