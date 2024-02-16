@@ -9,4 +9,5 @@ package edu.brown.cs.student.main.server.handlers.census;
  * @param state - the state code
  * @param county - the county code
  */
-public record CensusData(String name, String broadband, String state, String county) {}
+public record CensusData(
+    String name, String broadband, String state, String county, String date_time) {}
