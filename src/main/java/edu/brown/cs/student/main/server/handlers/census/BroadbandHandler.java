@@ -1,5 +1,6 @@
 package edu.brown.cs.student.main.server.handlers.census;
 
+import edu.brown.cs.student.main.server.serializers.CensusDataSerializer;
 import edu.brown.cs.student.main.server.serializers.MapSerializer;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -48,7 +49,7 @@ public class BroadbandHandler implements Route {
     // Check that two parameters were specified.
     if (request.queryParams().size() != 2) {
       responseData.put("result", "error");
-      responseData.put("error_type", "invalid number of parameters specified!");
+      responseData.put("error_type", "Invalid number of parameters specified!");
       responseData.put("params_given", request.queryParams());
       responseData.put("params_required", List.of("state", "county"));
       return new MapSerializer().serialize(responseData);
@@ -61,26 +62,26 @@ public class BroadbandHandler implements Route {
     // Check that both path and header were given.
     if (state == null || county == null) {
       responseData.put("result", "error");
-      responseData.put("error_type", "missing_parameter");
+      responseData.put("error_type", "Missing parameter!");
       responseData.put("error_arg", (state == null) ? "state" : "county");
       return new MapSerializer().serialize(responseData);
     }
 
     try {
-      // Check the cache for requested data, otherwise query the census.
+      // Get the data from the Datasource.
       CensusData censusData = this.datasource.getBroadbandData(state, county);
 
       // Add relevant fields to the result.
       responseData.put("result", "success");
       responseData.put("time", getTime());
-      responseData.put("data", censusData);
+      responseData.put("data", new CensusDataSerializer().serialize(censusData));
 
     } catch (Exception e) {
       // Add descriptive error message to the result.
       responseData.put("result", "error");
       String[] parts = e.getClass().toString().split("\\.");
       responseData.put("exception", parts[parts.length - 1]);
-      responseData.put("error_type", e.getMessage());
+      responseData.put("error_message", e.getMessage());
     }
     return new MapSerializer().serialize(responseData);
   }

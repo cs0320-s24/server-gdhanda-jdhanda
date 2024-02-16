@@ -40,7 +40,7 @@ public class ViewCSVHandler implements Route {
 
     if (request.queryParams().size() > 0) {
       responseData.put("result", "error");
-      responseData.put("error_type", "too many parameters!");
+      responseData.put("error_type", "Too many parameters!");
       responseData.put("params_given", request.queryParams());
       return new MapSerializer().serialize(responseData);
     }
@@ -57,7 +57,7 @@ public class ViewCSVHandler implements Route {
       responseData.put("result", "error");
       String[] parts = e.getClass().toString().split("\\.");
       responseData.put("exception", parts[parts.length - 1]);
-      responseData.put("error_type", e.getMessage());
+      responseData.put("error_message", e.getMessage());
     }
     return new MapSerializer().serialize(responseData);
   }

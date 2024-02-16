@@ -58,7 +58,7 @@ public class SearchCSVHandler implements Route {
     // Check that the value was given.
     if (value == null) {
       responseData.put("result", "error");
-      responseData.put("error_type", "missing_parameter");
+      responseData.put("error_type", "Missing parameter!");
       responseData.put("error_arg", "value");
       return new MapSerializer().serialize(responseData);
     }

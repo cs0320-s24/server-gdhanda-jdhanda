@@ -44,7 +44,7 @@ public class LoadCSVHandler implements Route {
     // Check that two parameters were specified.
     if (request.queryParams().size() != 2) {
       responseData.put("result", "error");
-      responseData.put("error_type", "invalid number of parameters specified!");
+      responseData.put("error_type", "Invalid number of parameters specified!");
       responseData.put("params_given", request.queryParams());
       responseData.put("params_required", List.of("filepath", "header"));
       return new MapSerializer().serialize(responseData);
@@ -57,7 +57,7 @@ public class LoadCSVHandler implements Route {
     // Check that both path and header were given.
     if (path == null || header == null) {
       responseData.put("result", "error");
-      responseData.put("error_type", "missing_parameter");
+      responseData.put("error_type", "Missing parameter!");
       responseData.put("error_arg", (path == null) ? "path" : "header");
       return new MapSerializer().serialize(responseData);
     }
@@ -65,7 +65,7 @@ public class LoadCSVHandler implements Route {
     // Check that header has a valid value.
     if (!(header.equals("true") || header.equals("false"))) {
       responseData.put("result", "error");
-      responseData.put("error_type", "invalid header value");
+      responseData.put("error_type", "Invalid header value!");
       responseData.put("valid_inputs", List.of("true", "false"));
       return new MapSerializer().serialize(responseData);
     }
@@ -83,7 +83,7 @@ public class LoadCSVHandler implements Route {
       responseData.put("result", "error");
       String[] parts = e.getClass().toString().split("\\.");
       responseData.put("exception", parts[parts.length - 1]);
-      responseData.put("error_type", e.getMessage());
+      responseData.put("error_message", e.getMessage());
     }
     return new MapSerializer().serialize(responseData);
   }
