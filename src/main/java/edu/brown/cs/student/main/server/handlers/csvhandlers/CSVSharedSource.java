@@ -69,7 +69,8 @@ public class CSVSharedSource implements CSVDatasource {
    */
   @Override
   public List<List<String>> searchCSV(String value, String header, boolean byIndex, boolean byValue)
-      throws CSVNotFoundException, InvalidIndexException, HeaderNotFoundException, NumberFormatException {
+      throws CSVNotFoundException, InvalidIndexException, HeaderNotFoundException,
+          NumberFormatException {
 
     if (!fileLoaded) {
       throw new CSVNotFoundException();

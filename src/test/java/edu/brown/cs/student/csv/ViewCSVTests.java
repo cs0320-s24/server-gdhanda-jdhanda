@@ -23,14 +23,10 @@ import org.junit.jupiter.api.Test;
 import org.testng.annotations.BeforeClass;
 import spark.Spark;
 
-/**
- * A test class to run UNIT tests on the viewcsv endpoint and handler.
- */
+/** A test class to run UNIT tests on the viewcsv endpoint and handler. */
 public class ViewCSVTests {
 
-  /**
-   * Set up the server port.
-   */
+  /** Set up the server port. */
   @BeforeClass
   public static void setupOnce() {
     // Pick an arbitrary free port
@@ -45,9 +41,7 @@ public class ViewCSVTests {
   private JsonAdapter<Map<String, Object>> adapter;
   private CSVDatasource sharedState;
 
-  /**
-   * Set up the required load and view handlers.
-   */
+  /** Set up the required load and view handlers. */
   @BeforeEach
   public void setup() {
     sharedState = new CSVSharedSource();
@@ -60,9 +54,7 @@ public class ViewCSVTests {
     adapter = moshi.adapter(mapStringObject);
   }
 
-  /**
-   * Clean up after tests.
-   */
+  /** Clean up after tests. */
   @AfterEach
   public void tearDown() {
     // Gracefully stop Spark listening on both endpoints

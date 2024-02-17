@@ -21,9 +21,7 @@ import org.junit.jupiter.api.Test;
 import org.testng.annotations.BeforeClass;
 import spark.Spark;
 
-/**
- * Testing class on the mocked census.
- */
+/** Testing class on the mocked census. */
 public class MockCensusTests {
 
   @BeforeClass
@@ -40,9 +38,7 @@ public class MockCensusTests {
   private JsonAdapter<Map<String, Object>> adapter;
   private JsonAdapter<CensusData> censusDataAdapter;
 
-  /**
-   * Set up the mocked source.
-   */
+  /** Set up the mocked source. */
   @BeforeEach
   public void setup() {
     // Use *MOCKED* data when in this test environment.
@@ -60,9 +56,7 @@ public class MockCensusTests {
     censusDataAdapter = moshi.adapter(CensusData.class);
   }
 
-  /**
-   * Clean up after tests.
-   */
+  /** Clean up after tests. */
   @AfterEach
   public void tearDown() {
     // Gracefully stop Spark listening on both endpoints

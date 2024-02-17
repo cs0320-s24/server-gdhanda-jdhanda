@@ -21,14 +21,10 @@ import org.junit.jupiter.api.Test;
 import org.testng.annotations.BeforeClass;
 import spark.Spark;
 
-/**
- * Testing class for the load csv endpoint and handler.
- */
+/** Testing class for the load csv endpoint and handler. */
 public class LoadCSVTests {
 
-  /**
-   * Set up the server port.
-   */
+  /** Set up the server port. */
   @BeforeClass
   public static void setupOnce() {
     // Pick an arbitrary free port
@@ -42,9 +38,7 @@ public class LoadCSVTests {
       Types.newParameterizedType(Map.class, String.class, Object.class);
   private JsonAdapter<Map<String, Object>> adapter;
 
-  /**
-   * Set up the testing objects in the server.
-   */
+  /** Set up the testing objects in the server. */
   @BeforeEach
   public void setup() {
     Spark.get("/loadcsv", new LoadCSVHandler(new CSVSharedSource()));
@@ -55,9 +49,7 @@ public class LoadCSVTests {
     adapter = moshi.adapter(mapStringObject);
   }
 
-  /**
-   * Clean up after testing.
-   */
+  /** Clean up after testing. */
   @AfterEach
   public void tearDown() {
     // Gracefully stop Spark listening on both endpoints
@@ -172,6 +164,7 @@ public class LoadCSVTests {
 
   /**
    * Test of a failed load because the filepath does not exist.
+   *
    * @throws IOException
    */
   @Test
@@ -214,6 +207,7 @@ public class LoadCSVTests {
 
   /**
    * Ensure that you can load a new CSV with one already loaded.
+   *
    * @throws IOException
    */
   @Test

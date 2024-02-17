@@ -23,14 +23,10 @@ import org.junit.jupiter.api.Test;
 import org.testng.annotations.BeforeClass;
 import spark.Spark;
 
-/**
- * Test class to run UNIT tests on the seachcsv endpoint and handler.
- */
+/** Test class to run UNIT tests on the seachcsv endpoint and handler. */
 public class SearchCSVTests {
 
-  /**
-   * Set up the server port.
-   */
+  /** Set up the server port. */
   @BeforeClass
   public static void setupOnce() {
     // Pick an arbitrary free port
@@ -45,9 +41,7 @@ public class SearchCSVTests {
   private JsonAdapter<Map<String, Object>> adapter;
   private CSVDatasource sharedState;
 
-  /**
-   * Set up the load and search handlers necessary.
-   */
+  /** Set up the load and search handlers necessary. */
   @BeforeEach
   public void setup() {
     sharedState = new CSVSharedSource();
@@ -60,9 +54,7 @@ public class SearchCSVTests {
     adapter = moshi.adapter(mapStringObject);
   }
 
-  /**
-   * Clean up after tests.
-   */
+  /** Clean up after tests. */
   @AfterEach
   public void tearDown() {
     // Gracefully stop Spark listening on both endpoints

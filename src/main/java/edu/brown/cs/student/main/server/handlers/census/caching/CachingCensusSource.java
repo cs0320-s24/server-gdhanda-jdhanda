@@ -25,7 +25,7 @@ public class CachingCensusSource implements BroadbandDatasource {
     this.original = original;
 
     // The cache will hold 25 items for up to 10 minutes each.
-    this.censusCache = new GenericCache<>(true, 25, true, 10);
+    this.censusCache = new GenericCache<>(true, 10, true, 1);
   }
 
   /**
