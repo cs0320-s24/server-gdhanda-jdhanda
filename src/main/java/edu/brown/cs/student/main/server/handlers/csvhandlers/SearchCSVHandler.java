@@ -109,7 +109,7 @@ public class SearchCSVHandler implements Route {
    */
   private String invalidParams(Set<String> params, Map<String, Object> responseData) {
     responseData.put("result", "error");
-    responseData.put("error_type", "invalid parameters specified!");
+    responseData.put("error_type", "Invalid parameters specified!");
     responseData.put("params_given", params);
     responseData.put("params_required", "value");
     responseData.put("optional_params", List.of("index", "header"));
