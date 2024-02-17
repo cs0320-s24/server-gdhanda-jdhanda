@@ -21,8 +21,14 @@ import org.junit.jupiter.api.Test;
 import org.testng.annotations.BeforeClass;
 import spark.Spark;
 
+/**
+ * Testing class for the load csv endpoint and handler.
+ */
 public class LoadCSVTests {
 
+  /**
+   * Set up the server port.
+   */
   @BeforeClass
   public static void setupOnce() {
     // Pick an arbitrary free port
@@ -36,6 +42,9 @@ public class LoadCSVTests {
       Types.newParameterizedType(Map.class, String.class, Object.class);
   private JsonAdapter<Map<String, Object>> adapter;
 
+  /**
+   * Set up the testing objects in the server.
+   */
   @BeforeEach
   public void setup() {
     Spark.get("/loadcsv", new LoadCSVHandler(new CSVSharedSource()));
@@ -46,6 +55,9 @@ public class LoadCSVTests {
     adapter = moshi.adapter(mapStringObject);
   }
 
+  /**
+   * Clean up after testing.
+   */
   @AfterEach
   public void tearDown() {
     // Gracefully stop Spark listening on both endpoints
@@ -77,6 +89,11 @@ public class LoadCSVTests {
     return clientConnection;
   }
 
+  /**
+   * Test of a successful loading.
+   *
+   * @throws IOException
+   */
   @Test
   public void testLoadCSVSuccess() throws IOException {
     // Set up the request, make the request
@@ -92,6 +109,11 @@ public class LoadCSVTests {
     loadConnection.disconnect();
   }
 
+  /**
+   * Test of a failed load due to missing file.
+   *
+   * @throws IOException
+   */
   @Test
   public void testLoadCSVFail_Missing() throws IOException {
     // Setup without any parameters (oops!)
@@ -107,6 +129,11 @@ public class LoadCSVTests {
     loadConnection.disconnect(); // close gracefully
   }
 
+  /**
+   * Test of a failed load due to too many args.
+   *
+   * @throws IOException
+   */
   @Test
   public void testLoadCSVFail_TooManyArgs() throws IOException {
     // Setup without any parameters (oops!)
@@ -122,6 +149,11 @@ public class LoadCSVTests {
     loadConnection.disconnect(); // close gracefully
   }
 
+  /**
+   * Test of a failed load because the file was not in the scope of the project.
+   *
+   * @throws IOException
+   */
   @Test
   public void testLoadCSVFail_OutsideFilepath() throws IOException {
     // Setup with bad parameters (oops)
@@ -138,6 +170,10 @@ public class LoadCSVTests {
     loadConnection.disconnect(); // close gracefully
   }
 
+  /**
+   * Test of a failed load because the filepath does not exist.
+   * @throws IOException
+   */
   @Test
   public void testLoadCSVFail_BadFilepath() throws IOException {
     // Setup with bad parameters (oops)
@@ -154,6 +190,11 @@ public class LoadCSVTests {
     loadConnection.disconnect(); // close gracefully
   }
 
+  /**
+   * Test of a failed load because the header specification was malformed.
+   *
+   * @throws IOException
+   */
   @Test
   public void testLoadCSVFail_BadHeader() throws IOException {
     // Setup with bad parameters (oops)
@@ -171,6 +212,10 @@ public class LoadCSVTests {
     loadConnection.disconnect(); // close gracefully
   }
 
+  /**
+   * Ensure that you can load a new CSV with one already loaded.
+   * @throws IOException
+   */
   @Test
   public void testLoadCSVTwice() throws IOException {
     // Setup with bad parameters (oops)

@@ -21,6 +21,9 @@ import org.junit.jupiter.api.Test;
 import org.testng.annotations.BeforeClass;
 import spark.Spark;
 
+/**
+ * Testing class on the mocked census.
+ */
 public class MockCensusTests {
 
   @BeforeClass
@@ -37,6 +40,9 @@ public class MockCensusTests {
   private JsonAdapter<Map<String, Object>> adapter;
   private JsonAdapter<CensusData> censusDataAdapter;
 
+  /**
+   * Set up the mocked source.
+   */
   @BeforeEach
   public void setup() {
     // Use *MOCKED* data when in this test environment.
@@ -54,6 +60,9 @@ public class MockCensusTests {
     censusDataAdapter = moshi.adapter(CensusData.class);
   }
 
+  /**
+   * Clean up after tests.
+   */
   @AfterEach
   public void tearDown() {
     // Gracefully stop Spark listening on both endpoints
@@ -85,6 +94,11 @@ public class MockCensusTests {
     return clientConnection;
   }
 
+  /**
+   * Test successful request.
+   *
+   * @throws IOException
+   */
   @Test
   public void testCensusRequestSuccess() throws IOException {
     // Set up the request, make the request
@@ -105,6 +119,11 @@ public class MockCensusTests {
     loadConnection.disconnect();
   }
 
+  /**
+   * Test a failed request for missing data.
+   *
+   * @throws IOException
+   */
   @Test
   public void testCensusRequestFail_Missing() throws IOException {
     // Setup without any parameters (oops!)
@@ -120,6 +139,11 @@ public class MockCensusTests {
     loadConnection.disconnect(); // close gracefully
   }
 
+  /**
+   * Test a failed request due to bad parameters.
+   *
+   * @throws IOException
+   */
   @Test
   public void testCensusRequestFail_BadParams() throws IOException {
     // Setup with bad parameters (oops)

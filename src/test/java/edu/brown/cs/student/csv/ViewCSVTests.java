@@ -23,8 +23,14 @@ import org.junit.jupiter.api.Test;
 import org.testng.annotations.BeforeClass;
 import spark.Spark;
 
+/**
+ * A test class to run UNIT tests on the viewcsv endpoint and handler.
+ */
 public class ViewCSVTests {
 
+  /**
+   * Set up the server port.
+   */
   @BeforeClass
   public static void setupOnce() {
     // Pick an arbitrary free port
@@ -39,6 +45,9 @@ public class ViewCSVTests {
   private JsonAdapter<Map<String, Object>> adapter;
   private CSVDatasource sharedState;
 
+  /**
+   * Set up the required load and view handlers.
+   */
   @BeforeEach
   public void setup() {
     sharedState = new CSVSharedSource();
@@ -51,6 +60,9 @@ public class ViewCSVTests {
     adapter = moshi.adapter(mapStringObject);
   }
 
+  /**
+   * Clean up after tests.
+   */
   @AfterEach
   public void tearDown() {
     // Gracefully stop Spark listening on both endpoints
@@ -83,6 +95,11 @@ public class ViewCSVTests {
     return clientConnection;
   }
 
+  /**
+   * Tests a successful view of a csv.
+   *
+   * @throws IOException
+   */
   @Test
   public void testViewCSVSuccess() throws IOException {
     // Set up the request, make the request
@@ -107,6 +124,11 @@ public class ViewCSVTests {
     loadConnection.disconnect();
   }
 
+  /**
+   * Tests the error message for when no CSV is loaded.
+   *
+   * @throws IOException
+   */
   @Test
   public void testViewCSVFail_NoCSVLoaded() throws IOException {
     // Setup without loading a csv (oops!)
@@ -122,6 +144,11 @@ public class ViewCSVTests {
     loadConnection.disconnect(); // close gracefully
   }
 
+  /**
+   * Tests for a failed view due to too many arguments being provided.
+   *
+   * @throws IOException
+   */
   @Test
   public void testLoadCSVFail_TooManyArgs() throws IOException {
     // Set up the request, make the request

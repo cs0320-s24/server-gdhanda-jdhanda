@@ -23,8 +23,14 @@ import org.junit.jupiter.api.Test;
 import org.testng.annotations.BeforeClass;
 import spark.Spark;
 
+/**
+ * Test class to run UNIT tests on the seachcsv endpoint and handler.
+ */
 public class SearchCSVTests {
 
+  /**
+   * Set up the server port.
+   */
   @BeforeClass
   public static void setupOnce() {
     // Pick an arbitrary free port
@@ -39,6 +45,9 @@ public class SearchCSVTests {
   private JsonAdapter<Map<String, Object>> adapter;
   private CSVDatasource sharedState;
 
+  /**
+   * Set up the load and search handlers necessary.
+   */
   @BeforeEach
   public void setup() {
     sharedState = new CSVSharedSource();
@@ -51,6 +60,9 @@ public class SearchCSVTests {
     adapter = moshi.adapter(mapStringObject);
   }
 
+  /**
+   * Clean up after tests.
+   */
   @AfterEach
   public void tearDown() {
     // Gracefully stop Spark listening on both endpoints
@@ -83,6 +95,11 @@ public class SearchCSVTests {
     return clientConnection;
   }
 
+  /**
+   * Test a successful search through all columns.
+   *
+   * @throws IOException
+   */
   @Test
   public void testSearchCSVSuccess_All() throws IOException {
     // Set up the request, make the request
@@ -107,6 +124,11 @@ public class SearchCSVTests {
     loadConnection.disconnect();
   }
 
+  /**
+   * Test a successful search when specifying the header name.
+   *
+   * @throws IOException
+   */
   @Test
   public void testSearchCSVSuccess_Header() throws IOException {
     // Set up the request, make the request
@@ -131,6 +153,11 @@ public class SearchCSVTests {
     loadConnection.disconnect();
   }
 
+  /**
+   * Test a successful search when specifying the header index.
+   *
+   * @throws IOException
+   */
   @Test
   public void testSearchCSVSuccess_Index() throws IOException {
     // Set up the request, make the request
@@ -155,6 +182,11 @@ public class SearchCSVTests {
     loadConnection.disconnect();
   }
 
+  /**
+   * Test for a search that will not find anything.
+   *
+   * @throws IOException
+   */
   @Test
   public void testSearchCSVFail_NotFound() throws IOException {
     // Set up the request, make the request
@@ -180,6 +212,11 @@ public class SearchCSVTests {
     loadConnection.disconnect();
   }
 
+  /**
+   * Test for a search that will fail due to a header that doesn't exist.
+   *
+   * @throws IOException
+   */
   @Test
   public void testSearchCSVFail_BadHeader() throws IOException {
     // Set up the request, make the request
@@ -205,6 +242,11 @@ public class SearchCSVTests {
     loadConnection.disconnect();
   }
 
+  /**
+   * Test for a failed search in an index that is invalid.
+   *
+   * @throws IOException
+   */
   @Test
   public void testSearchCSVFail_BadIndex() throws IOException {
     // Set up the request, make the request
@@ -230,6 +272,11 @@ public class SearchCSVTests {
     loadConnection.disconnect();
   }
 
+  /**
+   * Test for a fail that specifies both a header and index.
+   *
+   * @throws IOException
+   */
   @Test
   public void testSearchCSVFail_HeaderAndIndex() throws IOException {
     // Set up the request, make the request

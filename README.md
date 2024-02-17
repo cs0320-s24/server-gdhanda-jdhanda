@@ -52,6 +52,7 @@ in the cases when they are thrown. These include...
   - CSVNotFoundException
   - HeaderNotFoundException
   - InvalidFilepathException
+
 - And from the CSV project, the following carry over...
   - FactoryFailureException
   - InvalidIndexException
