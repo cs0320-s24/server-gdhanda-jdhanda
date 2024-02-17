@@ -83,12 +83,15 @@ No known errors or bugs.
 
 ##### Testing Search
 - Tests Searching on...
-  - A valid search string.
-  - A string that won't be found.
-  - Column by header.
-  - Column by index.
+  - A valid search all.
+  - A valid search header.
+  - A valid search index.
+  - Invalid search all.
+  - Invalid search header.
+  - Invalid search index.
   - Clashing header and index.
-  - No csv loaded.
+  - Too many parameters.
+  - No parameters.
 
 ##### Testing CSV Shared Source
 - Tests the Shared CSV on...
